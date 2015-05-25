@@ -9,3 +9,7 @@ github_username:  bensima
 # Build settings
 markdown: kramdown
 permalink: pretty
+
+# Assets
+sass:
+  style: :compressed
