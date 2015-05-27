@@ -1,0 +1,36 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: rgb(114, 140, 191);
+  color: #fff;
+}
+
+#page {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#content {
+  font: 1em Open Sans, sans-serif;
+  flex-direction: column;
+  display: flex;
+  text-align: center;
+  margin: auto;
+  max-width: 52em;
+  color: #fff;
+}
+
+.logo {
+  height: 272px;
+  margin-bottom: 4em;
+  width: 298px;
+}
+
+#links a {
+  color: #fff;
+  margin: 2em 1em;
+}
