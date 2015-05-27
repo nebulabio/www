@@ -8,6 +8,7 @@
                    [tailrecursion/boot-hoplon "0.1.0-SNAPSHOT"]
                    [tailrecursion/hoplon      "6.0.0-SNAPSHOT"]
                    [pandeiro/boot-http        "0.6.3-SNAPSHOT"]
+                   [garden                    "1.2.5"]
                    [boot-garden               "1.2.5-2"]]
   :source-paths   #{"src"}
   :resource-paths #{"resources/assets"}
@@ -21,14 +22,16 @@
   '[tailrecursion.boot-hoplon :refer [haml hoplon prerender html2cljs]]
   '[boot-garden.core          :refer [garden]])
 
+(task-options! garden {:styles-var 'bio.nebula.styles/base
+                       :output-to "css/style.css"})
+
 (deftask dev
   "Build nebula.bio for local development."
   [p port PORT int "Port to serve on"]
   (comp (serve :port (or port 4000))
         (watch)
         (speak)
-        (garden :styles-var 'bio.nebula.styles/base)
-        (haml)
+        (garden)
         (hoplon)
         (reload)
         (cljs)))
