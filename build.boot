@@ -39,7 +39,7 @@
 (deftask prod
   "Build nebula.bio for production deployment."
   []
-  (comp
-    (hoplon :pretty-print true)
-    (cljs :optimizations :advanced :source-map true)
-    (prerender)))
+  (comp (hoplon :pretty-print false)
+        (garden)
+        (cljs :optimizations :advanced :source-map true)
+        (prerender)))
