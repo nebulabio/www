@@ -1,26 +1,28 @@
 (set-env!
-  :dependencies  '[[clj-tagsoup               "0.3.0"]
-                   [adzerk/boot-cljs-repl     "0.1.9"]
-                   [adzerk/boot-reload        "0.2.6"]
-                   [pandeiro/boot-http        "0.6.2"]
-                   [markdown-clj              "0.9.63"]
-                   [adzerk/boot-cljs          "0.0-2814-0"]
-                   [tailrecursion/boot-hoplon "0.1.0-SNAPSHOT"]
-                   [tailrecursion/hoplon      "6.0.0-SNAPSHOT"]
-                   [pandeiro/boot-http        "0.6.3-SNAPSHOT"]
-                   [garden                    "1.2.5"]
-                   [boot-garden               "1.2.5-2"]]
-  :source-paths   #{"src"}
-  :resource-paths #{"resources/assets"}
-  :target-path    "resources/public")
+ :dependencies  '[[adzerk/boot-cljs-repl     "0.1.9"]
+                  [adzerk/boot-reload        "0.2.6"]
+                  [pandeiro/boot-http        "0.6.2"]
+                  [adzerk/boot-cljs          "0.0-2814-0"]
+                  [pandeiro/boot-http        "0.6.3-SNAPSHOT"]
+
+                  [boot-garden               "1.2.5-2"]
+                  [garden                    "1.2.5"]
+
+                  [tailrecursion/boot-hoplon "0.1.0-SNAPSHOT"]
+                  [tailrecursion/hoplon      "6.0.0-SNAPSHOT"]
+
+                  [cljsjs/stripe             "2.0-0"]]
+ :source-paths   #{"src"}
+ :resource-paths #{"resources/assets"}
+ :target-path    "resources/public")
 
 (require
-  '[adzerk.boot-cljs          :refer [cljs]]
-  '[adzerk.boot-cljs-repl     :refer [cljs-repl start-repl]]
-  '[adzerk.boot-reload        :refer [reload]]
-  '[pandeiro.boot-http        :refer [serve]]
-  '[tailrecursion.boot-hoplon :refer [haml hoplon prerender html2cljs]]
-  '[boot-garden.core          :refer [garden]])
+ '[adzerk.boot-cljs          :refer [cljs]]
+ '[adzerk.boot-cljs-repl     :refer [cljs-repl start-repl]]
+ '[adzerk.boot-reload        :refer [reload]]
+ '[pandeiro.boot-http        :refer [serve]]
+ '[tailrecursion.boot-hoplon :refer [haml hoplon prerender html2cljs]]
+ '[boot-garden.core          :refer [garden]])
 
 (task-options! garden {:styles-var 'bio.nebula.styles/base
                        :output-to "css/style.css"})
