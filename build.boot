@@ -1,15 +1,15 @@
 (set-env!
- :dependencies  '[[adzerk/boot-cljs-repl     "0.1.9"]
+ :dependencies  '[[adzerk/boot-cljs          "0.0-3269-2"]
+                  [adzerk/boot-cljs-repl     "0.1.9"]
                   [adzerk/boot-reload        "0.2.6"]
                   [pandeiro/boot-http        "0.6.2"]
-                  [adzerk/boot-cljs          "0.0-2814-0"]
                   [pandeiro/boot-http        "0.6.3-SNAPSHOT"]
 
-                  [boot-garden               "1.2.5-2"]
-                  [garden                    "1.2.5"]
+                  [boot-garden               "1.2.5-3"]
+                  [garden                    "1.2.6"]
 
                   [tailrecursion/boot-hoplon "0.1.0-SNAPSHOT"]
-                  [tailrecursion/hoplon      "6.0.0-SNAPSHOT"]
+                  [tailrecursion/hoplon      "6.0.0-alpha2"]
 
                   [cljsjs/stripe             "2.0-0"]]
  :source-paths   #{"src"}
