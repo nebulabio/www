@@ -17,8 +17,7 @@
 (defn container []
   [:div#content
    [splash]
-   [stripe/pay-form stripe/support-elem]
-   [stripe/support]])
+   [stripe/pay-form stripe/support-elem]])
 
 
 (defn init []
