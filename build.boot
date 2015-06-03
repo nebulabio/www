@@ -4,10 +4,12 @@
                   [adzerk/boot-reload        "0.2.6"]
                   [pandeiro/boot-http        "0.6.3-SNAPSHOT"]
 
+                  [environ                   "1.0.0"]
+                  [danielsz/boot-environ     "0.0.3"]
+
                   [boot-garden               "1.2.5-3"]
                   [garden                    "1.2.5"]
 
-                  [reagent                   "0.5.0"]
                   [reagent                   "0.5.0"]
                   [cljsjs/stripe             "2.0-0"]]
  :source-paths   #{"src"}
@@ -19,7 +21,8 @@
  '[adzerk.boot-cljs-repl     :refer [cljs-repl start-repl]]
  '[adzerk.boot-reload        :refer [reload]]
  '[pandeiro.boot-http        :refer [serve]]
- '[boot-garden.core          :refer [garden]])
+ '[boot-garden.core          :refer [garden]]
+ '[danielsz.boot-environ     :refer [environ]])
 
 (task-options! garden {:styles-var 'bio.nebula.styles/base
                        :output-to "css/style.css"}
@@ -29,7 +32,8 @@
 (deftask dev
   "Build nebula.bio for local development."
   [p port PORT int "Port to serve on"]
-  (comp (serve :port (or port 4000))
+  (comp (environ :env (load-file ".env"))
+        (serve :port (or port 4000))
         (watch)
         (speak)
         (garden)

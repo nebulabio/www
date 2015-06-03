@@ -1,11 +1,9 @@
 (ns bio.nebula.www.stripe
+  (:require-macros [bio.nebula.www.macros :refer [getenv]])
   (:require [reagent.core :as reagent :refer [atom]]))
 
-;(def *stripe-key*
-;  "The Stripe Publishable Key is set as a dynamic global variable
-;  so it can be easily swapped out during testing."
-;  "pk_live_MmXcXkUVkMEsC70bvOUfxjoo")
-;(.setPublishableKey Stripe *stripe-key*)
+
+(.setPublishableKey js/Stripe (getenv "stripe"))
 
 (def support-elem (atom false))
 
