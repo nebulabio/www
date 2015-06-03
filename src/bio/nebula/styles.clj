@@ -1,10 +1,13 @@
 (ns bio.nebula.styles
-  (:require [garden.def        :refer [defrule defstyles]]
-            [garden.stylesheet :refer [rule]]))
+  (:require [garden.def             :refer [defrule defstyles]]
+            [garden.color :as color :refer [hsl rgb]]
+            [garden.stylesheet      :refer [rule]]))
 
 ;; colors
-(def white "#fff")
-(def light-blue "rgb(114, 140, 191)")
+(def white "It's just white." "#fff")
+(def blue "Stolen from http://tonsky.me/ - it's such a nice blue!"  (hsl 215 50 55))
+(def light-blue "blue lightened by 25%" (color/lighten blue 25))
+(def orange "Complement of blue" (color/complement blue))
 
 ;; fonts
 (def sans [["1em" "Open Sans"] 'sans-serif])
@@ -15,10 +18,10 @@
 ;; styles
 (def reset [:html :body {:height "100%"}])
 
-(def body [:body {:background-color light-blue
+(def body [:body {:background-color blue
                   :color "#fff"}])
 
-(def page [:#page {:width "100%"
+(def page [:#page {:width "10p0%"
                    :height "100%"
                    :display "flex"
                    :justify-content "center"}])
@@ -42,6 +45,21 @@
 (def links [:#links [:a {:margin "2em 1em"
                          :color white}]])
 
+(def support [:button#support
+              :#support:focus
+              {:background-color orange
+               :color white
+               :border-style "solid"
+               :border-color white
+               :border-width "1px"
+               :outline "none"
+               :font sans
+               :font-weight "bold"
+               :padding "1em"
+               :margin "1em"}
+              [:&.active {:background-color white
+                          :color light-blue
+                          :border-color light-blue}]])
 
 (defstyles base
   reset
@@ -49,4 +67,5 @@
   page
   content
   logo
-  links)
+  links
+  support)
