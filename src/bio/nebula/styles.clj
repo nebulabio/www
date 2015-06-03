@@ -61,7 +61,7 @@
                :padding "1em"
                :margin "1em"}
               [:&.active {:background-color white
-                          :color light-blue
+                          :color blue
                           :border-color light-blue}]])
 
 (defstyles base
