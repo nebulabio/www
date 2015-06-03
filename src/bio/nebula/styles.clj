@@ -1,5 +1,5 @@
 (ns bio.nebula.styles
-  (:require [garden.def :refer [defrule defstyles]]
+  (:require [garden.def        :refer [defrule defstyles]]
             [garden.stylesheet :refer [rule]]))
 
 ;; colors

@@ -2,15 +2,13 @@
  :dependencies  '[[adzerk/boot-cljs          "0.0-3269-2"]
                   [adzerk/boot-cljs-repl     "0.1.9"]
                   [adzerk/boot-reload        "0.2.6"]
-                  [pandeiro/boot-http        "0.6.2"]
                   [pandeiro/boot-http        "0.6.3-SNAPSHOT"]
 
                   [boot-garden               "1.2.5-3"]
-                  [garden                    "1.2.6"]
+                  [garden                    "1.2.5"]
 
-                  [tailrecursion/boot-hoplon "0.1.0-SNAPSHOT"]
-                  [tailrecursion/hoplon      "6.0.0-alpha2"]
-
+                  [reagent                   "0.5.0"]
+                  [reagent                   "0.5.0"]
                   [cljsjs/stripe             "2.0-0"]]
  :source-paths   #{"src"}
  :resource-paths #{"resources/assets"}
@@ -21,11 +19,12 @@
  '[adzerk.boot-cljs-repl     :refer [cljs-repl start-repl]]
  '[adzerk.boot-reload        :refer [reload]]
  '[pandeiro.boot-http        :refer [serve]]
- '[tailrecursion.boot-hoplon :refer [haml hoplon prerender html2cljs]]
  '[boot-garden.core          :refer [garden]])
 
 (task-options! garden {:styles-var 'bio.nebula.styles/base
-                       :output-to "css/style.css"})
+                       :output-to "css/style.css"}
+               cljs   {:source-map true})
+
 
 (deftask dev
   "Build nebula.bio for local development."
@@ -34,14 +33,11 @@
         (watch)
         (speak)
         (garden)
-        (hoplon)
         (reload)
         (cljs)))
 
 (deftask prod
   "Build nebula.bio for production deployment."
   []
-  (comp (hoplon :pretty-print false)
-        (garden)
-        (cljs :optimizations :advanced :source-map true)
-        (prerender)))
+  (comp (garden {:pretty-print false})
+        (cljs :optimizations :advanced :source-map true)))
