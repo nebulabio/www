@@ -1,7 +1,7 @@
 (ns bio.nebula.styles
   (:require [garden.def             :refer [defrule defstyles]]
             [garden.color :as color :refer [hsl rgb]]
-            [garden.stylesheet      :refer [rule]]))
+            [garden.stylesheet      :refer [rule at-font-face]]))
 
 ;; colors
 (def white "It's just white." "#fff")
@@ -10,7 +10,10 @@
 (def orange "Complement of blue" (color/complement blue))
 
 ;; fonts
-(def sans [["1em" "Open Sans"] 'sans-serif])
+(def fira (at-font-face
+           [:font-family "FiraSans"
+            :src "url('fonts/FiraSans-Medium.otf') format('opentype')"]))
+(def sans [["1em" "FiraSans"] 'sans-serif])
 
 ;; utils
 (defn flex []  {:display "flex"})
