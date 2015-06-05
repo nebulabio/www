@@ -46,10 +46,10 @@ health. You own your health data, and you choose what to do with it. Healthcare 
                 "active"
                 "nonactive")
         style (if (= true @state)
-                {:display "block"}
+                {:display "flex"}
                 {:display "none"})]
-    [:div#join
-     [:form {:action "" :method "POST" :id "join-us-form" :style style}
+    [:div {:id "join" :style style}
+     [:form {:action "" :method "POST" :id "join-us-form"}
       [:div.form-row
        [:label [:span "Name"]
         [:input {:type "text"}]]]

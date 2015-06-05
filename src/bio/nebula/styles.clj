@@ -1,13 +1,14 @@
 (ns bio.nebula.styles
   (:require [garden.def             :refer [defrule defstyles]]
-            [garden.color :as color :refer [hsl rgb]]
+            [garden.color :as color :refer [hsl hsla rgb rgba]]
             [garden.stylesheet      :refer [rule at-font-face]]))
 
 ;; colors
-(def white "It's just white." "#fff")
-(def blue "Stolen from http://tonsky.me/ - it's such a nice blue!"  (hsl 215 50 55))
-(def light-blue "blue lightened by 25%" (color/lighten blue 25))
-(def orange "Complement of blue" (color/complement blue))
+(def  white "It's just white." "#fff")
+(def  blue "Stolen from http://tonsky.me/ - it's such a nice blue!"  (hsl 215 50 55))
+(defn blue-a [a] "Blue, but with transparency" (hsla 215 50 55 a))
+(def  light-blue "blue lightened by 25%" (color/lighten blue 25))
+(def  orange "Complement of blue" (color/complement blue))
 
 ;; fonts
 (def fira (at-font-face
@@ -17,10 +18,11 @@
 
 ;; utils
 (defn flex []  {:display "flex"})
-(def *border-radii* "5px")
+(def ^:dynamic *border-radii* "3px")
 
 ;; styles
-(def reset [:html :body {:height "100%" :font-size "10px"}])
+(def reset [:html :body {:height "100%" :font-size "10px"
+                         :margin 0 :padding 0}])
 
 (def body [:body {:background-color blue
                   :font sans
@@ -33,8 +35,7 @@
            [:a:hover {:border-color white}]])
 
 (def page [:#page {:height "100%"
-                   :padding "2em"
-                   :margin "auto"
+                   :margin :auto
                    :max-width "80em"
                    :display "flex"
                    :flex-wrap "wrap"
@@ -72,8 +73,7 @@
                 [(keyword "&[data-state='true']") {:z-index -1}
                  [:p :a {:text-shadow [["0 0 15px" white] ["0 0 7px" white]]
                          :border "none"
-                         :color (color/rgba 0 0 0 0)
-                         :transition all-ease}]]]
+                         :color (color/rgba 0 0 0 0)}]]]
 
                [:#toggler {:transition all-ease}]
                [:#join {:height "100%"
@@ -84,11 +84,10 @@
                         :position "absolute"
                         :top "0px"
                         :left "0px"
-                        :transition all-ease}
+                        :border-radius *border-radii*
+                        :background (color/lighten (blue-a 0.7) 25)}
                 
-                [:form {:padding "4em"
-                        :transition all-ease
-                        :background (color/rgba 240 240 240 0.7)}]]]])
+                [:form {:padding "4em"}]]]])
 
 
 ;; TODO
