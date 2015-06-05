@@ -10,9 +10,11 @@
    [:h2 "Open Source Biotech"]
    [:div#links
     [:a {:target "_blank" :href "https://github.com/nebulabio"}
-     [:i.fa.fa-github.fa-5x]]
+     [:i.fa.fa-github.fa-2x]]
     [:a {:target "_blank" :href "https://trello.com/b/Tb4b74V5/protochip"}
-     [:i.fa.fa-trello.fa-5x]]]])
+     [:i.fa.fa-trello.fa-2x]]
+    [:a {:target "_blank" :href "http://nebulabio.tumblr.com"}
+     [:i.fa.fa-tumblr.fa-2x]]]])
 
 
 (def copy-content "Jumbotron copy."
