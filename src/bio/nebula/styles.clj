@@ -17,6 +17,7 @@
 
 ;; utils
 (defn flex []  {:display "flex"})
+(def *border-radii* "5px")
 
 ;; styles
 (def reset [:html :body {:height "100%" :font-size "10px"}])
@@ -85,7 +86,7 @@
                         :left "0px"
                         :transition all-ease}
                 
-                [:form {:padding "2em"
+                [:form {:padding "4em"
                         :transition all-ease
                         :background (color/rgba 240 240 240 0.7)}]]]])
 
@@ -109,10 +110,11 @@
 (def links [:#links [:a {:margin "2em 1em"
                          :color white}]])
 
-(def forms [:form [:input {:border "none"
-                           :margin "1em"
-                           :line-height "1.8em"
-                           :padding ".4em"}]])
+(def forms [:form {:border-radius *border-radii*}
+            [:input {:border "none"
+                     :margin "1em"
+                     :line-height "1.8em"
+                     :padding ".4em"}]])
 
 (def buttons [:button
               :button:focus
@@ -121,6 +123,7 @@
                :border-style "solid"
                :border-color white
                :border-width "1px"
+               :border-radius *border-radii*
                :outline "none"
                :font-weight "bold"
                :padding "1em"
