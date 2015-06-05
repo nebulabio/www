@@ -1,17 +1,15 @@
 (set-env!
- :dependencies  '[[adzerk/boot-cljs          "0.0-3269-2"]
-                  [adzerk/boot-cljs-repl     "0.1.9"]
-                  [adzerk/boot-reload        "0.2.6"]
-                  [pandeiro/boot-http        "0.6.3-SNAPSHOT"]
-
-                  [environ                   "1.0.0"]
-                  [danielsz/boot-environ     "0.0.3"]
-
-                  [boot-garden               "1.2.5-3"]
-                  [garden                    "1.2.5"]
-
-                  [reagent                   "0.5.0"]
-                  [cljsjs/stripe             "2.0-0"]]
+ :dependencies  '[[adzerk/boot-cljs       "0.0-3269-2"]
+                  [adzerk/boot-cljs-repl  "0.1.9"]
+                  [adzerk/boot-reload     "0.2.6"]
+                  [pandeiro/boot-http     "0.6.3-SNAPSHOT"]
+                  [environ                "1.0.0"]
+                  [danielsz/boot-environ  "0.0.3"]
+                  [boot-garden            "1.2.5-3"]
+                  [garden                 "1.2.5"]
+                  [reagent                "0.5.0"]
+                  [cljsjs/stripe          "2.0-0"]
+                  [markdown-clj           "0.9.66"]]
  :source-paths   #{"src"}
  :resource-paths #{"resources/assets"}
  :target-path    "resources/public")
