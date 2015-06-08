@@ -7,6 +7,8 @@
 
 (def support-elem (atom false))
 
+(defn donate []
+  [stripe/pay-form stripe/support-elem])
 
 (defn pay-form [state]
   (let [style (if (= true @state)
