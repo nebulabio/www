@@ -7,7 +7,9 @@
                   [danielsz/boot-environ  "0.0.3"]
                   [boot-garden            "1.2.5-3"]
                   [garden                 "1.2.5"]
+                  [quile/component-cljs   "0.2.4"]
                   [reagent                "0.5.0"]
+                  [secretary              "1.2.3"]
                   [cljsjs/stripe          "2.0-0"]
                   [markdown-clj           "0.9.66"]]
  :source-paths   #{"src"}
