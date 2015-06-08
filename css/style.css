@@ -1,36 +1,158 @@
 html, body {
+  margin: 0;
   height: 100%;
+  padding: 0;
+  font-size: 10px;
 }
 
 body {
-  background-color: rgb(114, 140, 191);
+  color: #fff;
+  text-rendering: optimizelegibility;
+  font: 1em FiraSans, sans-serif;
+  background-color: #5383c6;
+}
+
+body a, body a:visited, body a:active {
+  border-bottom: 2px solid #b3c8e6;
+  text-decoration: none;
   color: #fff;
 }
 
+body a:hover {
+  border-color: #fff;
+}
+
 #page {
+  margin: auto;
   height: 100%;
+  flex-direction: row;
   display: flex;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-around;
+  max-width: 80em;
+  flex-wrap: wrap;
+  font-size: 1.8rem;
+  line-height: 2em;
+}
+
+#page>div {
+  margin: 2em 1em;
+}
+
+#masthead {
+  text-align: center;
+}
+
+#masthead a, #masthead a:hover, #masthead a:visited, #masthead a:active {
+  border: none;
+}
+
+#masthead a:hover {
+  color: #a3c3f0;
 }
 
 #content {
-  font: 1em Open Sans, sans-serif;
   flex-direction: column;
+  position: relative;
   display: flex;
+  justify-content: flex-start;
+  max-width: 45em;
+  align-items: center;
+}
+
+#content #toggler {
+  background-color: #d7a967;
+  width: 200px;
+  color: #fff;
+  font-size: 1.6rem;
+  margin-top: 1rem;
+}
+
+#content #main {
+  flex-direction: column;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#content #main #copy {
+  padding: 7px;
+  z-index: 1;
+  text-align: left;
+}
+
+#content #main #copy p {
+  margin-top: 2rem;
+}
+
+#content #main #copy[data-state='true'] {
+  z-index: -1;
+}
+
+#content #main #copy[data-state='true'] p, #content #main #copy[data-state='true'] a {
+  color: hsla(0, 0%, 0%, 0);
+  border: none;
+  text-shadow: 0 0 15px #fff, 0 0 7px #fff;
+}
+
+#content #main #join {
+  width: 100%;
+  top: 0px;
+  justify-content: flex-start;
+  height: 100%;
+  align-items: center;
+  flex-direction: column;
   text-align: center;
-  margin: auto;
-  max-width: 52em;
+  position: absolute;
+  border-radius: 3px;
+  display: flex;
+  background: hsla(215, 50%, 75%, 0.7);
+  left: 0px;
+}
+
+#content #main #join input {
+  color: #5383c6;
+}
+
+#content #main #join button {
+  background: #6795d7;
   color: #fff;
 }
 
 .logo {
   height: 272px;
   margin-bottom: 4em;
+  align-self: center;
   width: 298px;
+}
+
+.notice {
+  background: #6795d7;
+  text-align: left;
+  padding: 1em;
+  margin: 1em;
+  border: 2px solid #a3c3f0;
+  border-radius: 3px;
 }
 
 #links a {
   color: #fff;
   margin: 2em 1em;
+}
+
+form {
+  border-radius: 3px;
+}
+
+form input {
+  margin: 1em;
+}
+
+button, button:focus {
+  border-color: #a3c3f0;
+  border-radius: 3px;
+}
+
+button:hover, button:focus:hover {
+  border-color: #fff;
 }
