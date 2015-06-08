@@ -43,5 +43,6 @@
 (deftask prod
   "Build nebula.bio for production deployment."
   []
-  (comp (garden {:pretty-print false})
+  (comp (environ :env (load-file ".env"))
+        (garden :pretty-print false)
         (cljs :optimizations :advanced :source-map true)))
