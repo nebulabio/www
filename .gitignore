@@ -23,3 +23,5 @@ hs_err_*
 /test/test.js
 .env
 .nrepl-history
+.nrepl-port
+.repl
