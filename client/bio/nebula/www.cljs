@@ -4,8 +4,6 @@
             [secretary.core  :as secretary :refer-macros [defroute]]
             [goog.events     :as events]
             [goog.history.EventType :as EventType]
-            [quile.component :as component :refer (Lifecycle)]
-            ;[bidi.bidi       :as bidi      :refer (match-route resolve-handler RouteProvider tag)]
             [markdown.core   :refer [md->html]]
             [bio.nebula.www.stripe :as stripe])
   (:import goog.History))
@@ -107,7 +105,6 @@ health. You own your health data, and you choose what to do with it. Healthcare 
 (secretary/set-config! :prefix "#")
 
 (defroute "/"        [] (put! :current-page home))
-(defroute "/support" [] (put! :current-page support))
 
 (defn hook-browser-navigation! []
   (doto (History.)
