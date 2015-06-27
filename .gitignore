@@ -21,5 +21,7 @@ hs_err_*
 .boot
 /boot
 /test/test.js
-.env
+.env.edn
 .nrepl-history
+.nrepl-port
+.repl
