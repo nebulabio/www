@@ -1,10 +1,10 @@
 (set-env!
  :dependencies  '[;; Dev Tools
                   [adzerk/bootlaces        "0.1.11" :scope "test"]
-                  [adzerk/boot-cljs        "0.0-3269-2"]
+                  [adzerk/boot-cljs        "0.0-3269-2" :scope "test"]
                   [org.danielsz/system     "0.1.8-SNAPSHOT"]
                   [environ                 "1.0.0"]
-                  [danielsz/boot-environ   "0.0.3"]
+                  [danielsz/boot-environ   "0.0.3" :scope "test"]
                   [org.clojure/tools.nrepl "0.2.10"]
 
                   ;; Server
@@ -20,7 +20,7 @@
                   [reagent                "0.5.0"]
                   [secretary              "1.2.3"]
                   [cljsjs/stripe          "2.0-0"]
-                  [boot-garden            "1.2.5-3"]
+                  [boot-garden            "1.2.5-3" :scope "test"]
                   [garden                 "1.2.5"]]
  :source-paths   #{"client" "server"}
  :resource-paths #{"resources" "client" "server"}
