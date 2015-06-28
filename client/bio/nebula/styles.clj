@@ -73,11 +73,12 @@
                          :align-items "center"
                          :position "relative"}
 
-              [:#toggler {:margin-top "1rem"                          
-                          :font-size "1.6rem"
-                          :color white
-                          :width "200px"
-                          :background-color (color/complement (second blue-pallet))}]
+              [:button#join-us {:margin-top "1rem"
+                                :font-size "1.6rem"
+                                :color white
+                                :width "200px"
+                                :background-color (color/complement (second blue-pallet))}
+               [:a {:border :none}]]
               
               [:#main {:display "flex"
                        :flex-direction "column"
@@ -93,18 +94,14 @@
                          :border "none"
                          :color (color/rgba 0 0 0 0)}]]]
                
-               [:#join {:height "100%"
-                        :width "100%"
-                        :display "flex"
-                        :justify-content :flex-start
-                        :flex-direction :column
-                        :align-items :center
-                        :text-align :center
-                        :position "absolute"
-                        :top "0px"
-                        :left "0px"
-                        :border-radius *border-radii*
-                        :background (color/lighten (blue-a 0.7) 20)}
+               [:#join
+                {:justify-content :flex-start
+                 :flex-direction :column
+                 :align-items :center
+                 :text-align :center
+                 :border-radius *border-radii*
+                 :background (color/lighten (blue-a 0.7) 20)}
+                
                 [:input {:color blue}]
                 [:button {:color white
                           :background (second blue-pallet)}]]]])

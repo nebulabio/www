@@ -9,7 +9,7 @@
    [prone.middleware         :as prone]
    [hiccup.middleware                  :refer [wrap-base-url]]
    [environ.core                       :refer [env]]
-   [bio.nebula.views         :as views :refer [index-page payments-page]]
+   [bio.nebula.views         :as views :refer [index-page app-page]]
    [bio.nebula.trello                  :refer [need-funding]]))
 
 
@@ -27,7 +27,7 @@
 
 (defroutes app-routes
   (GET "/" [req] (index-page))
-  (GET "/payments" [req] (payments-page))
+  (GET "/app" [req] (app-page))
   (route/resources "/")
   (context "/api" req api-routes)
   (route/not-found "<h1>Page not found.</h1>"))
