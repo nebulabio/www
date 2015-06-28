@@ -1,7 +1,7 @@
 (set-env!
  :dependencies  '[;; Dev Tools
                   [adzerk/bootlaces        "0.1.11" :scope "test"]
-                  [adzerk/boot-cljs        "0.0-3308-0" :scope "test"]
+                  [adzerk/boot-cljs        "0.0-3269-4" :scope "test"]
                   [org.danielsz/system     "0.1.8"]
                   [environ                 "1.0.0"]
                   [danielsz/boot-environ   "0.0.4" :scope "test"]
@@ -14,7 +14,7 @@
                   [ring/ring-defaults "0.1.5"]
                   [compojure          "1.3.4"]
                   [hiccup             "1.0.5"]
-                  [abengoa/clj-stripe "1.0.4"]
+                  [prachetasp/stripe-clojure "1.0.0"]
                   
                   ;; Client
                   [reagent                "0.5.0"]
