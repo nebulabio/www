@@ -1,5 +1,6 @@
 (set-env!
  :dependencies  '[;; Dev Tools
+                  [adzerk/bootlaces        "0.1.11" :scope "test"]
                   [adzerk/boot-cljs        "0.0-3269-2"]
                   [org.danielsz/system     "0.1.8-SNAPSHOT"]
                   [environ                 "1.0.0"]
@@ -22,10 +23,11 @@
                   [boot-garden            "1.2.5-3"]
                   [garden                 "1.2.5"]]
  :source-paths   #{"client" "server"}
- :resource-paths #{"resources/"}
+ :resource-paths #{"resources" "client" "server"}
  :target-path    "target")
 
 (require
+ '[adzerk.bootlaces       :refer :all]
  '[reloaded.repl :as repl :refer [start stop go reset]]
  '[adzerk.boot-cljs       :refer [cljs]]
  '[boot-garden.core       :refer [garden]]
@@ -33,10 +35,19 @@
  '[system.boot            :refer [system run]]
  '[bio.nebula.systems     :refer [dev-system]])
 
+(def +version+ "latest")
+(bootlaces! +version+)
+
 (task-options! garden {:styles-var 'bio.nebula.styles/base
                        :output-to "public/css/style.css"}
                cljs   {:source-map true
-                       :asset-path "js/out"})
+                       :asset-path "js/out"}
+               pom    {:project 'bio.nebula
+                       :version +version+}
+               aot    {:namespace '#{bio.nebula.core}}
+               jar    {:main 'bio.nebula.core
+                       :manifest {"Description" "http://www.nebula.bio"
+                                  "Url" "https://github.com/nebulabio/www"}})
 
 (deftask dev
   "Run nebula.bio for local development."
@@ -57,18 +68,17 @@
    (run :main-namespace "bio.nebula.core" :arguments [#'dev-system])
    (wait)))
 
-(deftask prod
-  "Build nebula.bio for production deployment."
-  []
-  (comp (environ :env {:http-port 5000 :repl-port 5050}))
-        (garden :pretty-print false)
-        (cljs :optimizations :advanced :source-map true)))
-
 (deftask build
   "Builds an uberjar to be run with java -jar"
   []
   (comp
-   (aot :namespace '#{bio.nebula.core})
-   (pom :project 'bio.nebula :version "1.0.0")
+   (garden :pretty-print false)
+   (cljs :optimizations :advanced :source-map true)
+   (aot)
+   (pom)
    (uber)
-   (jar :main 'bio.nebula.core)))
+   (jar)))
+
+(defn -main [& args]
+  (require 'bio.nebula.core)
+  (apply (resolve 'bio.nebula.core/-main) args))

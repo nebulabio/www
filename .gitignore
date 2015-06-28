@@ -2,7 +2,6 @@
 /lib
 /classes
 /checkouts
-/resources/public/*
 /out
 /bootstrap
 pom.xml

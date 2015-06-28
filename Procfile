@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/bio.nebula-1.0.0.jar clojure.main -m bio.nebula.core
+web: java -Dhttp.port=$PORT -Drepl.port=$REPL_PORT -jar target/bio.nebula-latest.jar
