@@ -60,7 +60,7 @@
 (deftask prod
   "Build nebula.bio for production deployment."
   []
-  (comp (environ :env (load-file ".env"))
+  (comp (environ :env {:http-port 5000 :repl-port 5050}))
         (garden :pretty-print false)
         (cljs :optimizations :advanced :source-map true)))
 
