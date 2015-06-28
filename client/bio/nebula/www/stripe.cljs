@@ -3,7 +3,7 @@
   (:require [reagent.core :as reagent :refer [atom]]))
 
 
-(.setPublishableKey js/Stripe (getenv "stripe"))
+(.setPublishableKey js/Stripe (getenv :stripe-pub-key))
 
 (def support-elem (atom false))
 

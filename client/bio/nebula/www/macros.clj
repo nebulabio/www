@@ -1,3 +1,5 @@
-(ns bio.nebula.www.macros)
+(ns bio.nebula.www.macros
+  (:require [environ.core :refer [env]]))
 
-(defmacro getenv [k] (System/getenv k))
+
+(defmacro getenv [k] (env k))

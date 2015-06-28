@@ -52,7 +52,7 @@
 (deftask dev
   "Run nebula.bio for local development."
   []
-  (comp (environ :env {:http-port 3000 :repl-port 3030})
+  (comp (environ :env (load-file ".env.edn"))
         (watch :verbose true)
         (cljs)
         (garden)
