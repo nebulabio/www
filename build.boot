@@ -60,14 +60,6 @@
         (repl :server true)
         (speak)))
 
-(deftask dev-run
-  "Run a dev system from the command line."
-  []
-  (comp
-   (environ :env {:http-port 3000 :repl-port 3030})
-   (run :main-namespace "bio.nebula.core" :arguments [#'dev-system])
-   (wait)))
-
 (deftask build
   "Builds an uberjar to be run with java -jar"
   []
