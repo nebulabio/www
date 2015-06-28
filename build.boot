@@ -16,13 +16,16 @@
                   [hiccup             "1.0.5"]
                   [trello             "0.1.2-SNAPSHOT"]
                   [prachetasp/stripe-clojure "1.0.0"]
+                  [alaisi/postgres.async "0.6.0"]
+                  [oj                 "0.3.0"]
+                  [liberator          "0.13"]
                   
                   ;; Client
-                  [reagent                "0.5.0"]
-                  [secretary              "1.2.3"]
-                  [cljsjs/stripe          "2.0-0"]
-                  [boot-garden            "1.2.5-3" :scope "test"]
-                  [garden                 "1.2.5"]]
+                  [reagent       "0.5.0"]
+                  [secretary     "1.2.3"]
+                  [cljsjs/stripe "2.0-0"]
+                  [boot-garden   "1.2.5-3" :scope "test"]
+                  [garden        "1.2.5"]]
  :source-paths   #{"client" "server"}
  :resource-paths #{"resources" "client" "server"}
  :target-path    "target")
@@ -57,7 +60,8 @@
         (watch :verbose true)
         (cljs)
         (garden)
-        (system :sys #'dev-system :hot-reload true :auto-start true :files ["handler.clj" "views.clj"])
+        (system :sys #'dev-system :hot-reload true :auto-start true
+                :files ["handler.clj" "views.clj" "db.clj" "trello.clj" "stripe.clj"])
         (repl :server true)
         (speak)))
 
