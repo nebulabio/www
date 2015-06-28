@@ -14,6 +14,7 @@
                   [ring/ring-defaults "0.1.5"]
                   [compojure          "1.3.4"]
                   [hiccup             "1.0.5"]
+                  [trello             "0.1.2-SNAPSHOT"]
                   [prachetasp/stripe-clojure "1.0.0"]
                   
                   ;; Client

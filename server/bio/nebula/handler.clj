@@ -5,10 +5,19 @@
    [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
    [hiccup.middleware :refer [wrap-base-url]]
    [bio.nebula.views :refer [index-page]]
-   [stripe-clojure.core :as s]))
+   [environ.core :refer [env]]
+   [stripe-clojure.core :as s]
+   [trello.core :as trello]))
 
-(s/set-tokens! {:private (environ.core/env :stripe-secret-key)
-                :public (environ.core/env :stripe-pub-key)})
+(def +trello-board-id+ "Tb4b74V5")
+
+(def trello-auth {:key (env :trello-key)
+                  :token (env :trello-token)})
+
+(def board (trello/board-get trello-auth +trello-board-id+))
+
+(s/set-tokens! {:private (env :stripe-secret-key)
+                :public (env :stripe-pub-key)})
 
 (defroutes routes
   (GET "/" [] (index-page))
