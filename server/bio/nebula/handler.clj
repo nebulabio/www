@@ -6,10 +6,11 @@
    [ring.middleware.defaults           :refer [wrap-defaults site-defaults]]
    [ring.middleware.params             :refer [wrap-params]]
    [liberator.core           :as liber :refer [resource defresource]]
+   [prone.middleware         :as prone]
    [hiccup.middleware                  :refer [wrap-base-url]]
    [environ.core                       :refer [env]]
-   [bio.nebula.views         :as views :refer [index-page]]
-   [bio.nebula.trello                  :refer [needs-funding]]))
+   [bio.nebula.views         :as views :refer [index-page payments-page]]
+   [bio.nebula.trello                  :refer [need-funding]]))
 
 
 ;;https://github.com/adambard/Circulure/blob/master/src/circulure/core.clj#L144-L145
@@ -22,15 +23,19 @@
   `(ANY ~route req# (~resource req#)))
 
 (defroutes api-routes
-  (r GET "/needs-funding" needs-funding))
+  (r GET "/cards/need-funding" need-funding))
 
 (defroutes app-routes
-  (GET "/" [] (index-page))
+  (GET "/" [req] (index-page))
+  (GET "/payments" [req] (payments-page))
   (route/resources "/")
   (context "/api" req api-routes)
   (route/not-found "<h1>Page not found.</h1>"))
 
+(def prone-enabled? (= true (env :enable-prone)))
+
 (def app
-  (-> #'app-routes
-      (wrap-params)
-      (wrap-defaults site-defaults)))
+  (cond-> app-routes
+    prone-enabled? (prone/wrap-exceptions {:app-namespaces ['bio.nebula]})
+    true wrap-params
+    true (wrap-defaults site-defaults)))

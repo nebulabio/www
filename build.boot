@@ -13,6 +13,7 @@
                   [ring               "1.4.0-RC1"]
                   [ring/ring-defaults "0.1.5"]
                   [compojure          "1.3.4"]
+                  [prone              "0.8.2"]
                   [hiccup             "1.0.5"]
                   [trello             "0.1.2-SNAPSHOT"]
                   [prachetasp/stripe-clojure "1.0.0"]
