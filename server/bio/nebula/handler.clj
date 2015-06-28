@@ -8,7 +8,6 @@
 
 (defroutes routes
   (GET "/" [] (index-page))
-  (GET "/bar" [] (index-page))
   (route/resources "/")
   (route/not-found "<h1>Page not found.</h1>"))
 
