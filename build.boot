@@ -1,20 +1,20 @@
 (set-env!
  :dependencies  '[;; Dev Tools
                   [adzerk/bootlaces        "0.1.11" :scope "test"]
-                  [adzerk/boot-cljs        "0.0-3269-2" :scope "test"]
-                  [org.danielsz/system     "0.1.8-SNAPSHOT"]
+                  [adzerk/boot-cljs        "0.0-3308-0" :scope "test"]
+                  [org.danielsz/system     "0.1.8"]
                   [environ                 "1.0.0"]
-                  [danielsz/boot-environ   "0.0.3" :scope "test"]
+                  [danielsz/boot-environ   "0.0.4" :scope "test"]
                   [org.clojure/tools.nrepl "0.2.10"]
 
                   ;; Server
-                  [http-kit           "2.1.18"]
-                  [markdown-clj       "0.9.66"]
-                  [ring               "1.3.0"]
-                  [ring/ring-json     "0.3.1"]
-                  [ring/ring-defaults "0.1.4"]
+                  [http-kit           "2.1.19"]
+                  [markdown-clj       "0.9.67"]
+                  [ring               "1.4.0-RC1"]
+                  [ring/ring-defaults "0.1.5"]
                   [compojure          "1.3.4"]
-                  [hiccup             "1.0.0"]
+                  [hiccup             "1.0.5"]
+                  [abengoa/clj-stripe "1.0.4"]
                   
                   ;; Client
                   [reagent                "0.5.0"]
