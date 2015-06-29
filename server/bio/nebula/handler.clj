@@ -5,6 +5,7 @@
    [clojure.data.json        :as json]
    [ring.middleware.defaults           :refer [wrap-defaults site-defaults]]
    [ring.middleware.params             :refer [wrap-params]]
+   [ring.util.response                 :refer [redirect]]
    [liberator.core           :as liber :refer [resource defresource]]
    [prone.middleware         :as prone]
    [hiccup.middleware                  :refer [wrap-base-url]]
@@ -27,15 +28,31 @@
 
 (defroutes app-routes
   (GET "/" [req] (index-page))
-  (GET "/app" [req] (app-page))
+  (GET "/app/" [req] (app-page))
   (route/resources "/")
   (context "/api" req api-routes)
   (route/not-found "<h1>Page not found.</h1>"))
 
 (def prone-enabled? (= true (env :enable-prone)))
 
+(defn good-response? [res]
+  (and res (not= (:status res) 404)))
+
+(defn wrap-slash [handler]
+  (fn [{:keys [uri] :as req}]
+    (let [res (handler req)]
+      (if (or (good-response? res) (.endsWith uri "/"))
+        res
+        (let [added-slash (str uri "/")]
+          (if (good-response? (handler (-> req
+                                           (assoc :uri added-slash)
+                                           (assoc :path-info added-slash))))
+            (redirect added-slash)
+            res))))))
+
 (def app
   (cond-> app-routes
     prone-enabled? (prone/wrap-exceptions {:app-namespaces ['bio.nebula]})
+    true wrap-slash
     true wrap-params
     true (wrap-defaults site-defaults)))

@@ -46,7 +46,7 @@
 (task-options! garden {:styles-var 'bio.nebula.styles/base
                        :output-to "public/css/style.css"}
                cljs   {:source-map true
-                       :asset-path "js/out"}
+                       :asset-path "/js/out"}
                pom    {:project 'bio.nebula
                        :version +version+}
                aot    {:namespace '#{bio.nebula.core}}

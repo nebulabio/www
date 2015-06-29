@@ -3,8 +3,9 @@
             [hiccup.page   :refer [html5 include-css include-js]]))
 
 (defn page-wrap
-  [content & {:keys [id title description]
+  [content & {:keys [id title description js]
               :or {id "container"
+                   js nil
                    title "Nebula Bio • Open Source Biotech"
                    description "Nebula Bio is an independent movement to create the next generation of biotech products and tools. Everything is open source."}}]
   (html5
@@ -21,8 +22,8 @@
     (include-css "/css/style.css")]
    [:body {:id id}
     content
-    (include-js "https://js.stripe.com/v2/")
-    (include-js "/js/app.js")]))
+    (if (not= js nil)
+      (map include-js js))]))
 
 (defn masthead []
   [:div#masthead
@@ -63,6 +64,8 @@ health. You own your health data, and you choose what to do with it. Healthcare 
 
 (defn app-page []
   (page-wrap nil
+             :js ["https://js.stripe.com/v2/"
+                   "/js/app.js"]
              :id "app"
              :title "Nebula Bio App"
              :description "Open Source Biotech"))

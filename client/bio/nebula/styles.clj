@@ -49,15 +49,7 @@
              }]
            [:a:hover {:border-color white}]])
 
-(def page [:#page {:height "100%"
-                   :margin :auto
-                   :max-width "80em"
-                   :display "flex"
-                   :flex-wrap "wrap"
-                   :flex-direction "row"
-                   :justify-content "space-around"
-                   :font-size "1.8rem"
-                   :line-height "2em"}
+(def page [:#page 
            [:&>div {:margin "2em 1em"}]])
 
 
@@ -66,45 +58,77 @@
                 {:border "none"}]
                [:a:hover {:color (first blue-pallet)}]])
 
-(def content [:#content {:max-width "45em"
-                         :display "flex"
-                         :flex-direction "column"
-                         :justify-content "flex-start"
-                         :align-items "center"
-                         :position "relative"}
+(def sidebar [:#sidebar {:min-width "26rem"}
+              [:ul]])
 
-              [:button#join-us {:margin-top "1rem"
-                                :font-size "1.6rem"
-                                :color white
-                                :width "200px"
-                                :background-color (color/complement (second blue-pallet))}
-               [:a {:border :none}]]
+(def splash-page
+  [:button#join-us {:margin-top "1rem"
+                    :font-size "1.6rem"
+                    :color white
+                    :width "200px"
+                    :background-color (color/complement (second blue-pallet))}
+   [:a {:border :none}]])
+
+
+(def viewport
+  [:#viewport {:height "100%"
+               :margin :auto
+               :max-width "80em"
+               :display "flex"
+               :flex-wrap "nowrap"
+               :flex-direction "row"
+               :justify-content "space-between"
+               :font-size "1.8rem"
+               :line-height "2em"}])
+
+;; FIXME: Split this up into "app" and "index" or something
+(def content
+  [:#content {:background-color white
+              :color (color/darken blue 75)
+              :width "100%"
+              :padding "3rem"
+              :display "flex"
+              :flex-direction "column"
+              :justify-content "flex-start"
+              :align-items "center"
+              :position "relative"}
+
+
+
+   ;; A well acts to "sit-back" in the viewport
+   [:.well {:background-color (color/darken white 7)
+            :padding "2rem"}]
+
+   ;; A card has a decent border around the outside
+   [:.card {:box-shadow [["0px" "1px" "2px" (rgba 0 0 0 0.05)]]
+            :border-radius *border-radii*
+            :background-color white}]
+   
+   [:a {:color black}]
               
-              [:#main {:display "flex"
-                       :flex-direction "column"
-                       :align-items "center"
-                       :justify-content "center"
-                       :position "relative"}
+   [:#main {:display "flex"
+            :flex-direction "column"
+            :align-items "center"
+            :justify-content "center"
+            :position "relative"}]
                
-               [:#copy {:z-index 1 :text-align "left" :padding "7px"}
-                [:p {:margin-top "2rem"}]
-                
-                [(keyword "&[data-state='true']") {:z-index -1}
-                 [:p :a {:text-shadow [["0 0 15px" white] ["0 0 7px" white]]
-                         :border "none"
-                         :color (color/rgba 0 0 0 0)}]]]
+   [:#copy {:z-index 1 :text-align "left" :padding "7px"}
+    [:p {:margin-top "2rem"}]
+    
+    [(keyword "&[data-state='true']") {:z-index -1}
+     [:p :a {:text-shadow [["0 0 15px" white] ["0 0 7px" white]]
+             :border "none"
+             :color (color/rgba 0 0 0 0)}]]]
                
-               [:#join
-                {:justify-content :flex-start
-                 :flex-direction :column
-                 :align-items :center
-                 :text-align :center
-                 :border-radius *border-radii*
-                 :background (color/lighten (blue-a 0.7) 20)}
-                
-                [:input {:color blue}]
-                [:button {:color white
-                          :background (second blue-pallet)}]]]])
+   [:#join
+    {:justify-content :flex-start
+     :flex-direction :column
+     :align-items :center
+     :text-align :center}
+    
+    [:input {:color blue}]
+    [:button {:color white
+              :background (second blue-pallet)}]]])
 
 
 (def logo [:.logo {:width "298px"
@@ -114,10 +138,9 @@
 
 (def notices [:.notice {:border-radius *border-radii*
                         :border [["2px solid" (first blue-pallet)]]
-                        :margin "1em"
                         :padding "1em"
                         :text-align :left
-                        :background (second blue-pallet)}])
+                        :background (color/lighten (second blue-pallet) 20)}])
 
 (def links [:#links [:a {:margin "2em 1em"
                          :color white}]])
@@ -135,6 +158,8 @@
   reset
   body
   page
+  viewport
+  sidebar
   masthead
   content
   logo
