@@ -17,7 +17,7 @@
                   [hiccup             "1.0.5"]
                   [trello             "0.1.2-SNAPSHOT"]
                   [prachetasp/stripe-clojure "1.0.0"]
-                  [alaisi/postgres.async "0.6.0"]
+                  [postgresql         "9.3-1102.jdbc41"]
                   [oj                 "0.3.0"]
                   [liberator          "0.13"]
                   
