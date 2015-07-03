@@ -1,4 +1,4 @@
-(ns bio.nebula.www.macros
+(ns bio.nebula.client.macros
   (:require [environ.core :refer [env]]))
 
 

@@ -1,4 +1,4 @@
-(ns bio.nebula.views
+(ns bio.nebula.server.views
   (:require [markdown.core :refer [md-to-html-string]]
             [hiccup.page   :refer [html5 include-css include-js]]))
 

@@ -29,32 +29,32 @@
                   [cljsjs/stripe "2.0-0"]
                   [boot-garden   "1.2.5-3" :scope "test"]
                   [garden        "1.2.5"]]
- :source-paths   #{"client" "server"}
- :resource-paths #{"resources" "client" "server"}
+ :source-paths   #{"src"}
+ :resource-paths #{"resources" "src"}
  :target-path    "target")
 
 (require
- '[adzerk.bootlaces       :refer :all]
- '[reloaded.repl :as repl :refer [start stop go reset]]
- '[adzerk.boot-cljs       :refer [cljs]]
- '[boot-garden.core       :refer [garden]]
- '[mbuczko.boot-ragtime   :refer [ragtime]]
- '[environ.boot           :refer [environ]]
- '[system.boot            :refer [system run]]
- '[bio.nebula.systems     :refer [dev-system]])
+ '[adzerk.bootlaces          :refer :all]
+ '[reloaded.repl :as repl    :refer [start stop go reset]]
+ '[adzerk.boot-cljs          :refer [cljs]]
+ '[boot-garden.core          :refer [garden]]
+ '[mbuczko.boot-ragtime      :refer [ragtime]]
+ '[environ.boot              :refer [environ]]
+ '[system.boot               :refer [system run]]
+ '[bio.nebula.server.systems :refer [dev-system]])
 
 (def +version+ "latest")
 (bootlaces! +version+)
 
-(task-options! ragtime {:database (str "jdbc" (:database-url (load-file ".env.edn")))}
+(task-options! ragtime {:database (str "jdbc" (:database-uri (load-file ".env.edn")))}
                garden  {:styles-var 'bio.nebula.styles/base
                         :output-to "public/css/style.css"}
                cljs    {:source-map true
                         :asset-path "/js/out"}
                pom     {:project 'bio.nebula
                         :version +version+}
-               aot     {:namespace '#{bio.nebula.core}}
-               jar     {:main 'bio.nebula.core
+               aot     {:namespace '#{bio.nebula.server}}
+               jar     {:main 'bio.nebula.server
                         :manifest {"Description" "http://www.nebula.bio"
                                   "Url" "https://github.com/nebulabio/www"}})
 
@@ -82,5 +82,5 @@
    (jar)))
 
 (defn -main [& args]
-  (require 'bio.nebula.core)
-  (apply (resolve 'bio.nebula.core/-main) args))
+  (require 'bio.nebula.server)
+  (apply (resolve 'bio.nebula.server/-main) args))

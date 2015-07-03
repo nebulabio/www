@@ -1,4 +1,4 @@
-(ns bio.nebula.www.session
+(ns bio.nebula.client.session
   (:refer-clojure :exclude [get])
   (:requir [reagent.core :as reagent :refer [atom]]))
 

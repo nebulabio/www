@@ -1,4 +1,4 @@
-(ns bio.nebula.trello
+(ns bio.nebula.server.trello
   "Exposes the necessary resources for interacting with Trello."
   (:require
    [environ.core :refer [env]]

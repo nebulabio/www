@@ -1,4 +1,4 @@
-(ns bio.nebula.stripe
+(ns bio.nebula.server.stripe
   "Handles Stripe interactions."
   (:require
    [stripe-clojure.core :as s]

@@ -1,4 +1,4 @@
-(ns bio.nebula.db
+(ns bio.nebula.server.db
   (:require [environ.core :refer [env]]
             [clojure.string :as s]
             [oj.core :as oj]

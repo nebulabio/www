@@ -1,11 +1,11 @@
-(ns bio.nebula.www
+(ns bio.nebula.client
   "Initialization namespace for the Nebula Bio website."
-  (:require [reagent.core           :as reagent   :refer [atom]]
-            [secretary.core         :as secretary :refer-macros [defroute]]
-            [goog.events            :as events]
-            [goog.history.EventType :as EventType]
-            [markdown.core          :as md        :refer [md->html]]
-            [bio.nebula.www.stripe  :as stripe])
+  (:require [reagent.core             :as reagent   :refer [atom]]
+            [secretary.core           :as secretary :refer-macros [defroute]]
+            [goog.events              :as events]
+            [goog.history.EventType   :as EventType]
+            [markdown.core            :as md        :refer [md->html]]
+            [bio.nebula.client.stripe :as stripe])
   (:import goog.History))
 
 (defn- unsafe-html

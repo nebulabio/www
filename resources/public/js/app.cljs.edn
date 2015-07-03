@@ -1,2 +1,2 @@
-{:require  [bio.nebula.www]
- :init-fns [bio.nebula.www/init]}
+{:require  [bio.nebula.client]
+ :init-fns [bio.nebula.client/init]}

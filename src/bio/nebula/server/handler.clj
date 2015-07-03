@@ -1,4 +1,4 @@
-(ns bio.nebula.handler
+(ns bio.nebula.server.handler
   (:require
    [compojure.core           :as c     :refer [defroutes context GET POST DELETE PUT ANY]]
    [compojure.route          :as route]
@@ -10,8 +10,8 @@
    [prone.middleware         :as prone]
    [hiccup.middleware                  :refer [wrap-base-url]]
    [environ.core                       :refer [env]]
-   [bio.nebula.views         :as views :refer [index-page app-page]]
-   [bio.nebula.trello                  :refer [need-funding]]))
+   [bio.nebula.server.views  :as views :refer [index-page app-page]]
+   [bio.nebula.server.trello           :refer [need-funding]]))
 
 
 ;;https://github.com/adambard/Circulure/blob/master/src/circulure/core.clj#L144-L145

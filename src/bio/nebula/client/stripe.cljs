@@ -1,5 +1,5 @@
-(ns bio.nebula.www.stripe
-  (:require-macros [bio.nebula.www.macros :refer [getenv]])
+(ns bio.nebula.client.stripe
+  (:require-macros [bio.nebula.client.macros :refer [getenv]])
   (:require [reagent.core :as reagent :refer [atom]]))
 
 
