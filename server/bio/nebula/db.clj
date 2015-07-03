@@ -4,18 +4,7 @@
             [oj.core :as oj]
             [oj.modifiers :as db]))
 
-(defn db-url []
-  (zipmap [:user :password :hostname :port :database]
-          (-> (env :database-url)
-              (s/replace #"postgres://" "")
-              (s/split #":|/|@"))))
-
-(def db-spec {:hostname (:hosname db-url)
-              :port     (:port db-url)
-              :database (:database db-url)
-              :user     (:user db-url)
-              :password (:password db-url)})
-
+(def db-spec {:connection-uri (:database-uri env)})
 
 (defprotocol CrudModel
   "A CRUD model interface for the database."
