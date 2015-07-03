@@ -1,11 +1,12 @@
 (ns bio.nebula.client
   "Initialization namespace for the Nebula Bio website."
-  (:require [reagent.core             :as reagent   :refer [atom]]
-            [secretary.core           :as secretary :refer-macros [defroute]]
-            [goog.events              :as events]
-            [goog.history.EventType   :as EventType]
-            [markdown.core            :as md        :refer [md->html]]
-            [bio.nebula.client.stripe :as stripe])
+  (:require [reagent.core              :as reagent   :refer [atom]]
+            [secretary.core            :as secretary :refer-macros [defroute]]
+            [goog.events               :as events]
+            [goog.history.EventType    :as EventType]
+            [markdown.core             :as md        :refer [md->html]]
+            [bio.nebula.client.session :as session]
+            [bio.nebula.client.stripe  :as stripe])
   (:import goog.History))
 
 (defn- unsafe-html
@@ -48,19 +49,14 @@
 
 ;;; Application state and routing
 
-(def app-state (atom {}))
-
-(defn put! [k v]
-  (swap! app-state assoc k v))
-
 (defn current-page-will-mount []
-  (put! :current-page join-email-list))
+  (session/put! :current-page join-email-list))
 
 (defn current-page-render []
   [:div#viewport
    (sidebar)
    [:div#content
-    [(@app-state :current-page)]]])
+    [(session/get :current-page)]]])
 
 (defn current-page []
   (reagent/create-class {:component-will-mount current-page-will-mount
@@ -68,10 +64,10 @@
 
 (secretary/set-config! :prefix "/#")
 
-(defroute "/"         [] (put! :current-page join-email-list))
-(defroute "/join"     [] (put! :current-page join-email-list))
-(defroute "/payments" [] (put! :current-page payments))
-(defroute "/funding"  [] (put! :current-page funding))
+(defroute "/"         [] (session/put! :current-page join-email-list))
+(defroute "/join"     [] (session/put! :current-page join-email-list))
+(defroute "/payments" [] (session/put! :current-page payments))
+(defroute "/funding"  [] (session/put! :current-page funding))
 
 (defn hook-browser-navigation! []
   (doto (History.)

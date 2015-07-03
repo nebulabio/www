@@ -1,10 +1,10 @@
 (ns bio.nebula.client.session
   (:refer-clojure :exclude [get])
-  (:requir [reagent.core :as reagent :refer [atom]]))
+  (:require [reagent.core :as reagent :refer [atom]]))
 
 (def state (atom {}))
 
-(def get [k & [default]]
+(defn get [k & [default]]
   (clojure.core/get @state k default))
 
 (defn put! [k v]
