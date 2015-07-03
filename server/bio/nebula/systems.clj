@@ -10,9 +10,8 @@
 
 (defsystem dev-system
   [:web (new-web-server (Integer. (env :http-port)) app)
-   :db (new-postgres-database db-spec)])
+   :repl-server (new-repl-server (Integer. (env :repl-port)))])
 
 (defsystem prod-system
   [:web (new-web-server (Integer. (env :http-port)) app)
-   :db (new-postgres-database db-spec)
    :repl-server (new-repl-server (Integer. (env :repl-port)))])

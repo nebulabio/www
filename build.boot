@@ -4,7 +4,7 @@
                   [adzerk/boot-cljs        "0.0-3269-4" :scope "test"]
                   [org.danielsz/system     "0.1.8"]
                   [environ                 "1.0.0"]
-                  [danielsz/boot-environ   "0.0.4" :scope "test"]
+                  ;[boot-environ            "1.0.0"]
                   [org.clojure/tools.nrepl "0.2.10"]
 
                   ;; Server
@@ -36,7 +36,7 @@
  '[reloaded.repl :as repl :refer [start stop go reset]]
  '[adzerk.boot-cljs       :refer [cljs]]
  '[boot-garden.core       :refer [garden]]
- '[danielsz.boot-environ  :refer [environ]]
+ '[environ.boot           :refer [environ]]
  '[system.boot            :refer [system run]]
  '[bio.nebula.systems     :refer [dev-system]])
 
@@ -63,7 +63,6 @@
         (garden)
         (system :sys #'dev-system :hot-reload true :auto-start true
                 :files ["handler.clj" "views.clj" "db.clj" "trello.clj" "stripe.clj"])
-        (repl :server true)
         (speak)))
 
 (deftask build

@@ -1,13 +1,14 @@
 (ns bio.nebula.db
   (:require [environ.core :refer [env]]
+            [clojure.string :as s]
             [oj.core :as oj]
             [oj.modifiers :as db]))
 
 
 (def db-url (zipmap [:user :password :hostname :port :database]
                     (-> (env :database-url)
-                        (clojure.string/replace #"postgres://" "")
-                        (clojure.string/split #":|/|@"))))
+                        (s/replace #"postgres://" "")
+                        (s/split #":|/|@"))))
 
 (def db-spec {:hostname (:hosname db-url)
               :port     (:port db-url)
