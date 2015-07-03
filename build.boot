@@ -2,13 +2,13 @@
  :dependencies  '[;; Dev Tools
                   [adzerk/bootlaces        "0.1.11" :scope "test"]
                   [adzerk/boot-cljs        "0.0-3269-4" :scope "test"]
-                  [adzerk/boot-reload      "0.3.1"]
+                  [adzerk/boot-reload      "0.3.1" :scope "test"]
                   [org.danielsz/system     "0.1.8"]
                   [environ                 "1.0.0"]
-                  ;[boot-environ            "1.0.0"]
+                  ;[boot-environ            "1.0.0" :scope "test"]
                   [org.clojure/tools.nrepl "0.2.10"]
                   [ragtime                 "0.4.1"]
-                  [mbuczko/boot-ragtime    "0.1.3"]
+                  [mbuczko/boot-ragtime    "0.1.3" :scope "test"]
 
                   ;; Server
                   [http-kit           "2.1.19"]
