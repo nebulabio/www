@@ -63,6 +63,7 @@
         (garden)
         (system :sys #'dev-system :hot-reload true :auto-start true
                 :files ["handler.clj" "views.clj" "db.clj" "trello.clj" "stripe.clj"])
+        (repl :server true)
         (speak)))
 
 (deftask build

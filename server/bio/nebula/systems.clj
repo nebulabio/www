@@ -9,8 +9,7 @@
             [bio.nebula.handler :refer [app]]))
 
 (defsystem dev-system
-  [:web (new-web-server (Integer. (env :http-port)) app)
-   :repl-server (new-repl-server (Integer. (env :repl-port)))])
+  [:web (new-web-server (Integer. (env :http-port)) app)])
 
 (defsystem prod-system
   [:web (new-web-server (Integer. (env :http-port)) app)
