@@ -46,7 +46,8 @@
 (def +version+ "latest")
 (bootlaces! +version+)
 
-(task-options! ragtime {:database (str "jdbc" (:database-uri (load-file ".env.edn")))}
+(task-options! ragtime {:database (str "jdbc:" (:database-uri (load-file ".env.edn")))
+                        :directory "resources/migrations"}
                garden  {:styles-var 'bio.nebula.styles/base
                         :output-to "public/css/style.css"}
                cljs    {:source-map true
