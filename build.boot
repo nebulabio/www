@@ -6,6 +6,8 @@
                   [environ                 "1.0.0"]
                   ;[boot-environ            "1.0.0"]
                   [org.clojure/tools.nrepl "0.2.10"]
+                  [ragtime                 "0.4.1"]
+                  [mbuczko/boot-ragtime    "0.1.3"]
 
                   ;; Server
                   [http-kit           "2.1.19"]
@@ -36,6 +38,7 @@
  '[reloaded.repl :as repl :refer [start stop go reset]]
  '[adzerk.boot-cljs       :refer [cljs]]
  '[boot-garden.core       :refer [garden]]
+ '[mbuczko.boot-ragtime   :refer [ragtime]]
  '[environ.boot           :refer [environ]]
  '[system.boot            :refer [system run]]
  '[bio.nebula.systems     :refer [dev-system]])
@@ -43,15 +46,16 @@
 (def +version+ "latest")
 (bootlaces! +version+)
 
-(task-options! garden {:styles-var 'bio.nebula.styles/base
-                       :output-to "public/css/style.css"}
-               cljs   {:source-map true
-                       :asset-path "/js/out"}
-               pom    {:project 'bio.nebula
-                       :version +version+}
-               aot    {:namespace '#{bio.nebula.core}}
-               jar    {:main 'bio.nebula.core
-                       :manifest {"Description" "http://www.nebula.bio"
+(task-options! ragtime {:database (str "jdbc" (:database-url (load-file ".env.edn")))}
+               garden  {:styles-var 'bio.nebula.styles/base
+                        :output-to "public/css/style.css"}
+               cljs    {:source-map true
+                        :asset-path "/js/out"}
+               pom     {:project 'bio.nebula
+                        :version +version+}
+               aot     {:namespace '#{bio.nebula.core}}
+               jar     {:main 'bio.nebula.core
+                        :manifest {"Description" "http://www.nebula.bio"
                                   "Url" "https://github.com/nebulabio/www"}})
 
 (deftask dev
