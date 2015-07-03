@@ -2,6 +2,7 @@
  :dependencies  '[;; Dev Tools
                   [adzerk/bootlaces        "0.1.11" :scope "test"]
                   [adzerk/boot-cljs        "0.0-3269-4" :scope "test"]
+                  [adzerk/boot-reload      "0.3.1"]
                   [org.danielsz/system     "0.1.8"]
                   [environ                 "1.0.0"]
                   ;[boot-environ            "1.0.0"]
@@ -37,6 +38,7 @@
  '[adzerk.bootlaces          :refer :all]
  '[reloaded.repl :as repl    :refer [start stop go reset]]
  '[adzerk.boot-cljs          :refer [cljs]]
+ '[adzerk.boot-reload        :refer [reload]]
  '[boot-garden.core          :refer [garden]]
  '[mbuczko.boot-ragtime      :refer [ragtime]]
  '[environ.boot              :refer [environ]]
@@ -64,6 +66,7 @@
   []
   (comp (environ :env (load-file ".env.edn"))
         (watch :verbose true)
+        (reload :on-jsload 'bio.nebula.client/main)
         (cljs)
         (garden)
         (system :sys #'dev-system :hot-reload true :auto-start true

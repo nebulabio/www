@@ -81,5 +81,5 @@
     (.setEnabled true)))
 (hook-browser-navigation!)
 
-(defn init []
+(defn main []
   (reagent/render-component [current-page] (.getElementById js/document "app")))
