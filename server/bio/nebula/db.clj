@@ -4,11 +4,11 @@
             [oj.core :as oj]
             [oj.modifiers :as db]))
 
-
-(def db-url (zipmap [:user :password :hostname :port :database]
-                    (-> (env :database-url)
-                        (s/replace #"postgres://" "")
-                        (s/split #":|/|@"))))
+(defn db-url []
+  (zipmap [:user :password :hostname :port :database]
+          (-> (env :database-url)
+              (s/replace #"postgres://" "")
+              (s/split #":|/|@"))))
 
 (def db-spec {:hostname (:hosname db-url)
               :port     (:port db-url)
