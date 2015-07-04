@@ -33,7 +33,7 @@
   (context "/api" req api-routes)
   (route/not-found "<h1>Page not found.</h1>"))
 
-(def prone-enabled? (= true (env :enable-prone)))
+(def prone-enabled? (= true (:enable-prone env)))
 
 (defn good-response? [res]
   (and res (not= (:status res) 404)))
