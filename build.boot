@@ -3,9 +3,13 @@
                   [adzerk/bootlaces        "0.1.11" :scope "test"]
                   [adzerk/boot-cljs        "0.0-3269-4" :scope "test"]
                   [adzerk/boot-reload      "0.3.1" :scope "test"]
+                  [adzerk/boot-test        "1.0.4" :scope "test"]
+                  [stripe-tester-clj       "0.1.0"]
                   [org.danielsz/system     "0.1.8"]
                   [environ                 "1.0.0"]
-                  ;[boot-environ            "1.0.0" :scope "test"]
+                  ;;[boot-environ            "1.0.0" :scope "test"]
+                  ;; boot/core can be removed once boot-environ is on Clojars
+                  [boot/core               "2.1.2" :scope "test"]
                   [org.clojure/tools.nrepl "0.2.10"]
                   [ragtime                 "0.4.1"]
                   [mbuczko/boot-ragtime    "0.1.3" :scope "test"]
@@ -30,12 +34,13 @@
                   [cljsjs/stripe "2.0-0"]
                   [boot-garden   "1.2.5-3" :scope "test"]
                   [garden        "1.2.5"]]
- :source-paths   #{"src"}
+ :source-paths   #{"src" "test"}
  :resource-paths #{"resources" "src"}
  :target-path    "target")
 
 (require
  '[adzerk.bootlaces          :refer :all]
+ '[adzerk.boot-test          :refer [test]]
  '[reloaded.repl :as repl    :refer [start stop go reset]]
  '[adzerk.boot-cljs          :refer [cljs]]
  '[adzerk.boot-reload        :refer [reload]]
@@ -66,6 +71,7 @@
   []
   (comp (environ :env (load-file ".env.edn"))
         (watch :verbose true)
+        (test)
         (reload :on-jsload 'bio.nebula.client/main)
         (cljs)
         (garden)
