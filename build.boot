@@ -29,6 +29,7 @@
                   [liberator          "0.13"]
                   
                   ;; Client
+                  [cljs-ajax     "0.3.13"]
                   [reagent       "0.5.0"]
                   [secretary     "1.2.3"]
                   [cljsjs/stripe "2.0-0"]

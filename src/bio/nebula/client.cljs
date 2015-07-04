@@ -5,13 +5,13 @@
             [goog.events               :as events]
             [goog.history.EventType    :as EventType]
             [markdown.core             :as md        :refer [md->html]]
+            [bio.nebula.client.util    :as util]
             [bio.nebula.client.session :as session]
-            [bio.nebula.client.stripe  :as stripe])
+            [bio.nebula.client.stripe  :as stripe]
+            [bio.nebula.client.views.funding  :as funding]
+            [bio.nebula.client.views.payments :as payments]
+            [bio.nebula.client.views.join :as join])
   (:import goog.History))
-
-(defn- unsafe-html
-  ([comp content] (unsafe-html comp nil content))
-  ([comp props content] [comp (assoc props :dangerouslySetInnerHTML {:__html content})]))
 
 ;;; Content and pages
 
@@ -19,38 +19,14 @@
   [:div#sidebar
    [:ul
     [:li [:a {:href "#/join"} "Sign up for updates"]]
-    [:li [:a {:href "#/payments"} "Payments"]]
+    ;[:li [:a {:href "#/payments"} "Payments"]]
     [:li [:a {:href "#/funding"}  "What needs funding"]]]])
 
-
-(defn join-email-list []
-  (let [mailchimp-endpoint "//nebulabiotech.us2.list-manage.com/subscribe/post?u=28cc4785c874dceaa296ec03b&amp;id=bb5d4b5ccb"]
-    [:div {:id "join"}
-     [:div (unsafe-html :div.notice
-                        (md->html
-                         "We'll mail you an update when we launch our beta test. If you'd like to support us financially (and we could definitely use the support since we are funding this out-of-pocket right now) feel free to [contact us directly](https://trello.com/c/9roL7q3b/74-contact). We have a payment gateway setup for you to [fund specific projects](https://trello.com/c/WXi42q1U/75-help-fund-us). Thanks, and mahalo!"))]
-     [:form {:action mailchimp-endpoint :method "POST" :id "join-email-list-form"}
-      [:div.form-row
-       [:label {:for "mce-NAME"} [:span "Name"]
-        [:input {:id "mcd-NAME" :type "text" :name "NAME"}]]]
-      [:div.form-row
-       [:label {:for "mce-EMAIL"} [:span "Email"]
-        [:input {:id "mce-EMAIL" :type "email" :name "EMAIL"}]]]
-      ;; required by MailChimp:
-      [:div {:style {:position :absolute :left "-5000px"}}
-       [:input {:type "text" :name "b_28cc4785c874dceaa296ec03b_bb5d4b5ccb" :tabindex "-1" :value ""}]]
-      [:button {:type "submit"} "Submit"]]]))
-
-(defn payments []
-  [:h2.card "This is payments"])
-
-(defn funding []
-  [:h2 "This is funding"])
 
 ;;; Application state and routing
 
 (defn current-page-will-mount []
-  (session/put! :current-page join-email-list))
+  (session/put! :current-page join/main))
 
 (defn current-page-render []
   [:div#viewport
@@ -64,10 +40,10 @@
 
 (secretary/set-config! :prefix "/#")
 
-(defroute "/"         [] (session/put! :current-page join-email-list))
-(defroute "/join"     [] (session/put! :current-page join-email-list))
-(defroute "/payments" [] (session/put! :current-page payments))
-(defroute "/funding"  [] (session/put! :current-page funding))
+(defroute "/"         [] (session/put! :current-page join/main))
+(defroute "/join"     [] (session/put! :current-page join/main))
+(defroute "/payments" [] (session/put! :current-page payments/main))
+(defroute "/funding"  [] (session/put! :current-page funding/main))
 
 (defn hook-browser-navigation! []
   (doto (History.)
