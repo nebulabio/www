@@ -10,30 +10,25 @@
    [prone.middleware         :as prone]
    [hiccup.middleware                  :refer [wrap-base-url]]
    [environ.core                       :refer [env]]
-   [bio.nebula.server.views  :as views :refer [index-page app-page]]
-   [bio.nebula.server.trello           :refer [need-funding]]))
+   [bio.nebula.server.views  :as views :refer [index-page checkout-page]]
+   [bio.nebula.server.card             :refer [card cards]]))
 
 
-;;https://github.com/adambard/Circulure/blob/master/src/circulure/core.clj#L144-L145
-(defmacro r [method route handler]
-  `(~method ~route req# (~handler req#)))
+(comment
+  "Other routes I want:"
+  (ANY "/f" req funds) "A list of the funders we've gotten so far."
+  (ANY "/f/:id" [id] (fund id))
+  (ANY "/u" req users) "We should eventually keep track of our users."
+  (ANY "/u/:id" [id] (user id)))
 
-(defmacro rr [route resource]
-  "Defines a route to a RESTful resource. CRUD operations are assumed
-  to be handled by Liberator."
-  `(ANY ~route req# (~resource req#)))
-
-(defroutes api-routes
-  (r GET "/cards/need-funding" need-funding))
 
 (defroutes app-routes
-  (GET "/" [req] (index-page))
-  (GET "/app/" [req] (app-page))
+  (GET "/"          []    (index-page))
+  (ANY "/c"         req   cards)
+  (ANY "/c/:id"     [id]  (card id))
+  (GET "/checkout/" [req] (checkout-page))
   (route/resources "/")
-  (context "/api" req api-routes)
   (route/not-found "<h1>Page not found.</h1>"))
-
-(def prone-enabled? (= true (:enable-prone env)))
 
 (defn good-response? [res]
   (and res (not= (:status res) 404)))
@@ -49,6 +44,8 @@
                                            (assoc :path-info added-slash))))
             (redirect added-slash)
             res))))))
+
+(def prone-enabled? (= true (:enable-prone env)))
 
 (def app
   (cond-> app-routes
