@@ -1,2 +1,0 @@
-{:require  [bio.nebula.client]
- :init-fns [bio.nebula.client/main]}

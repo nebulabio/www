@@ -1,0 +1,18 @@
+%form.card{:action => "/checkout/", :method => "POST"}
+  %input{:type => "hidden", :value => "trelloIdString"}
+  %div.image
+    %img{:src => "//placehold.it/200x200"}
+  %div.content
+    %h3.header= lorem.sentence
+    %div.meta 
+      Owner: 
+      %span.owner= lorem.name
+    %div.description
+      %div.ui.red.label= lorem.word
+      %div.ui.green.label= lorem.word
+  %div.content
+    %h4.ui.sub.header Description
+    %p= lorem.sentences 6
+  %button.ui.bottom.attached.green.button{:type => "submit"}
+    %i.shop.icon
+    Fund Me

@@ -1,0 +1,1 @@
+StripeCheckout.configure()

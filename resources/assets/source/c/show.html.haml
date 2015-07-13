@@ -1,0 +1,31 @@
+---
+title: Card Name
+page_id: card
+page_classes: app
+layout: app
+---
+
+%h2.header= lorem.sentence
+%div.description
+  %div.ui.red.label= lorem.word
+  %div.ui.green.label= lorem.word
+%div.ui.grid
+  %div.twelve.wide.column
+    %div.ui.basic.segment
+      %h3.ui.header Description
+      %p= lorem.paragraph
+  %div.four.wide.column
+    %div.ui.card
+      %div.content
+        %div.header= lorem.name
+        %div.meta Owner
+        %div.ui.green.button Fund Me
+      %div.content
+        %h4.ui.sub.header
+        %div.ui.small.feed
+          - rand((4..20)).times do
+            %div.event
+              %div.content
+                %div.date= lorem.date
+                = lorem.sentence
+

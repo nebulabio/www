@@ -1,0 +1,8 @@
+= wrap_layout :base do
+  %div.ui.blue.inverted.fixed.main.stackable.menu
+    %a.item(href = "/")
+      %img(src = "/images/symbol-white.png")
+    %a.item Link 1
+    %a.item Link 2
+  %div.ui.container
+    = yield

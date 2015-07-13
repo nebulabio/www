@@ -1,0 +1,42 @@
+---
+title: Checkout | Nebula Bio
+page_id: checkout
+page_classes: app
+layout: app
+---
+
+%script{:src => "https://checkout.stripe.com/checkout.js"}
+%form.ui.form
+  %h4.ui.dividing.header Checkout
+  %div.ui.grid
+    %div.twelve.wide.column
+      = partial "message"
+      %div.field
+        %label Who are ya?
+        %div.two.fields
+          %div.field
+            %input{:type => "text", :name => "first-name", :placeholder => "First Name"}
+          %div.field
+            %input{:type => "text", :name => "last-name", :placeholder => "Last Name"}
+      %div.field
+        %div.field
+          %input{:type => "email", :name => "email", :placeholder => "me@example.com"}
+      %div.field
+        %label Where ya from?
+        %div.fields
+          %div.eleven.wide.field
+            %input{:type => "text", :name => "city", :placeholder => "City"}
+          %div.five.wide.field
+            %input{:type => "text", :name => "zipcode", :placeholder => "Zipcode"}
+      %div.two.fields
+        %div.field
+          = partial "state_menu"
+        %div.field
+          = partial "country_menu"
+      %a#stripe-checkout
+        %button.ui.green.labeled.icon.button
+          %i.shop.icon
+          Checkout with Stripe
+    %div.four.wide.column
+      %div.ui.cards
+        = partial "../c/card"
