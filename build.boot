@@ -25,6 +25,7 @@
                   [prone              "0.8.2"]
                   [hiccup             "1.0.5"]
                   [enlive             "1.1.5"]
+                  [prismatic/schema "0.4.3"]
                   [trello             "0.1.2-SNAPSHOT"]
                   [prachetasp/stripe-clojure "1.0.0"]
                   [postgresql         "9.3-1102.jdbc41"]

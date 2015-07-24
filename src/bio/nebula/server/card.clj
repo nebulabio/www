@@ -12,6 +12,8 @@
   modifications to the code."
   (:require
    [environ.core :refer [env]]
+   [schema.core  :as s :refer [defschema]]
+   [clojure.tools.logging :as log]
    [cheshire.core  :as json  :refer :all]
    [liberator.core :as liber :refer [defresource resource]]
    [trello.core    :as trello]
@@ -23,16 +25,18 @@
 (def trello-board      (trello/board-get auth +trello-board-id+))
 (def all-lists         (trello/board-lists auth +trello-board-id+))
 
+
 (defn- find-cards-need-funding
   "Convenience function for gathering all the cards that need funding."
   []
   (let [needs-funding-list (first (filter #(= "Needs Funding" (:name %)) all-lists))
         all-cards (trello/board-cards auth +trello-board-id+)]
+    (log/info "find-cards-need-funding")
     (filter #(= (:idList %) (:id needs-funding-list)) all-cards)))
 
 (defn- pull-member-details [member]
   {:name (:fullName member)
-   :gravater (:gravatarHash member)})
+   :gravatar (:gravatarHash member)})
 
 (defn- pull-details
   "Extract desirable card details from a single card."
@@ -46,13 +50,39 @@
     {:name   (:name card)
      :owner  (first member-details)
      :image  (first attachment-urls)
-     :labels (map label-data labels)
+     :labels (vec (map label-data labels))
      :url    (:url card)
      :id     (:id card)
      :desc   (:desc card)}))
 
-(defn- cards-need-funding [_]
+(defn cards-need-funding []
   (map pull-details (find-cards-need-funding)))
+
+(defschema CardSchema
+  {:name s/Str
+   :owner (s/maybe {:name s/Str :gravatar s/Str})
+   :image (s/maybe s/Str)
+   :labels (s/maybe [{:name s/Str :color s/Str}])
+   :url s/Str
+   :id s/Str
+   :desc s/Str})
+
+(comment
+  "I'm not actually using this record, but if I wanted to use it with the 
+schema, this is how.."
+  
+  (s/defrecord Card
+      [name   :- s/Str
+       owner  :- {:name s/Str :gravatar s/Str}
+       image  :- s/Str
+       labels :- [{:name s/Str :color s/Str}]
+       url    :- s/Str
+       id     :- s/Str
+       desc   :- s/Str])
+  
+  (s/defn cards-need-funding-1 :- Card [_]
+    (map pull-details (find-cards-need-funding)))
+)
 
 (defresource card [id]
   :available-media-types ["application/json" "text/html"]
@@ -64,13 +94,19 @@
        "application/json" this
        "text/html" (card-view this))))
 
+(defn respond-to [req & responses]
+  (let [ks (keys responses)
+        vs (vals responses)
+        ss (interleave ks vs)]
+    (condp = (get-in req [:representation :media-type]) 
+      ss)))
+
 (defresource cards
   :available-media-types ["application/json" "text/html"]
   :allowed-method [:get]
-  :handle-ok
-  #(let [media-type (get-in % [:representation :media-type])
-         this (map pull-details (find-cards-need-funding))]
-     (condp = media-type
-       "application/json" this
-       "text/html" (apply str (card-view this)))))
-
+  :handle-ok (fn [req]
+               (let [this (map pull-details (find-cards-need-funding))]
+                 (log/info "cards resource")
+                 (respond-to req
+                             {"application/json" this
+                              "text/html" (apply str (card-view this))}))))

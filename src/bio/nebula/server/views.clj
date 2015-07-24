@@ -7,10 +7,11 @@
 (deftemplate index-page "public/index.html" [])
 
 (def card-sel [:#card-index :> :div.ui.container :> :div :> [:div (nth-child 1)]])
+
 (defsnippet card-model "public/c/index.html" card-sel
-  [{:keys [name url desc]}]
+  [{:keys [name owner image labels url id desc]}]
   [:h3.header] (html/content name)
-  [:.owner] (html/content "A Person")
+  [:.owner] (html/content owner)
   [:.content :p] (html/html-content (md-to-html-string desc)))
 
 (deftemplate card-view "public/c/index.html" [cards]
