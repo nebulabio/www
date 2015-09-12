@@ -32,8 +32,8 @@
                   [oj                 "0.3.0"]
                   [liberator          "0.13"]
                   [cheshire           "5.5.0"]]
- :source-paths   #{"src" "test"}
- :resource-paths #{"resources" "ui"}
+ :source-paths   #{"src" "test" "ui/templates"}
+ :resource-paths #{"resources" "ui/templates"}
  :target-path    "target")
 
 (require
@@ -64,11 +64,10 @@
   []
   (comp (environ :env (load-file ".env.edn"))
         (watch :verbose true)
-        (test)
         (system :sys #'dev-system :hot-reload true :auto-start true
                 :files ["handler.clj" "views.clj" "db.clj" "trello.clj" "stripe.clj"])
         (repl :server true)
-        (speak)))
+        (speak :theme "pillsbury")))
 
 (deftask build
   "Builds an uberjar to be run with java -jar"
