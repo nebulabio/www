@@ -1,19 +1,23 @@
 # Nebula Bio Website - [www.nebula.bio](http://www.nebula.bio)
 
-Static-page website for Nebula Bio. Links to our [development board](https://trello.com/b/Tb4b74V5/protochip) and processes the payments.
+Website and ops tool for Nebula Bio. Links to our [development board](https://trello.com/b/Tb4b74V5/protochip) and processes the payments, and tracks some stuff. Work in progress.
 
 ## Building
 
 First install [Boot](http://boot-clj.com). Then, to do development:
 
 ```sh
-boot dev
+$ boot dev
 ```
 
-This will serve a local copy of the site to port 4000. You can change the port with the `-p` flag. When you're finished developing, you can deploy with:
+This will serve a local copy of the site to the port specified by `env.edn`.
+
+This app currently uses the [Middleman pattern](http://adambard.com/blog/middleman-enlive-your-new-god/). To work on the UI:
 
 ```sh
-make deploy
+$ cd ui
+$ bundle install
+$ bin/middleman server
 ```
 
-That calls `boot prod` first to compile the project with optimizations and prerendering, then calls [`ghp-import`](https://github.com/davisp/ghp-import) which is a Python program that takes a target directory (in this case `resources/public`) and adds it to the `gh-pages` branch of this repo. This automatically pushes the `gh-pages` branch to GitHub, which serves the site.
+Once I get some more functionality, perhaps I'll switch to an SPA in [Hoplon](https://github.com/hoplon/hoplon).

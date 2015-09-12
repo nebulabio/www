@@ -72,5 +72,5 @@ configure :build do
   # Or use a different image path
   # set :http_prefix, "/Content/images/"
 
-  set :build_dir, "../public"
+  set :build_dir, "templates"
 end

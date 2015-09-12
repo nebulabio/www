@@ -25,15 +25,15 @@
                   [prone              "0.8.2"]
                   [hiccup             "1.0.5"]
                   [enlive             "1.1.5"]
-                  [prismatic/schema "0.4.3"]
-                  [trello             "0.1.2-SNAPSHOT"]
+                  [prismatic/schema   "0.4.3"]
+                  [me.bsima/trello    "0.2.0"]
                   [prachetasp/stripe-clojure "1.0.0"]
                   [postgresql         "9.3-1102.jdbc41"]
                   [oj                 "0.3.0"]
                   [liberator          "0.13"]
                   [cheshire           "5.5.0"]]
  :source-paths   #{"src" "test"}
- :resource-paths #{"resources" "src" "assets"}
+ :resource-paths #{"resources" "ui"}
  :target-path    "target")
 
 (require
