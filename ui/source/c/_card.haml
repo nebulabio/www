@@ -3,15 +3,18 @@
   %div.image
     %img{:src => "//placehold.it/200x200"}
   %div.content
-    %h3.header.card-title= lorem.sentence
+    %h3.header.card-title{"data-id" => "card-model-title"}
+      = lorem.sentence
     %div.meta
       Owner: 
-      %span.owner.card-owner= lorem.name
+      %span.owner.card-owner{"data-id" => "card-model-owner"}
+        = lorem.name
     %div.description.card-labels
-      %div.ui.red.label= lorem.word
+      %div.ui.red.label{"data-id" => "card-model-labels"}
+        = lorem.word
   %div.content
     %h4.ui.sub.header Description
-    %div.card-description
+    %div.card-description{"data-id" => "card-model-content"}
       %p= lorem.sentences 6
   %button.ui.bottom.attached.green.button.fund-me{:type => "submit"}
     %i.shop.icon

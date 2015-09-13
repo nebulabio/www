@@ -24,8 +24,8 @@
 
 (defroutes app-routes
   (GET "/"          []    (index-page))
-  (ANY "/c"         req   cards)
-  (ANY "/c/:id"     [id]  (card id))
+  (GET "/c"         req   cards)
+  (GET "/c/:id"     [id]  (card id))
   (GET "/checkout/" [req] (checkout-page))
   (route/resources "/")
   (route/not-found "<h1>Page not found.</h1>"))

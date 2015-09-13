@@ -31,7 +31,7 @@
                   [liberator          "0.13"]
                   [cheshire           "5.5.0"]]
  :source-paths   #{"src" "test" "db"}
- :resource-paths #{"resources" "ui/templates"}
+ :resource-paths #{"resources" "ui"}
  :target-path    "target")
 
 (require
