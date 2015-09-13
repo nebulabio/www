@@ -42,7 +42,7 @@
  '[mbuczko.boot-ragtime      :refer [ragtime]]
  '[environ.boot              :refer [environ]]
  '[system.boot               :refer [system run]]
- '[bio.nebula.server.systems :refer [dev-system]])
+ '[bio.nebula.server.systems :refer [dev-system prod-system]])
 
 (def +version+ "latest")
 (bootlaces! +version+)
@@ -65,12 +65,12 @@
         (watch :verbose true)
         (speak :theme "pillsbury")
         (system :sys #'dev-system :hot-reload true :auto-start true
-                :files ["handler.clj" "views.clj" "db.clj" "trello.clj" "stripe.clj"])
+                :files ["handler.clj" "views.clj" "db.clj" "card.clj" "stripe.clj"])
         (repl :server true)
         (speak :theme "ordinance")))
 
-(deftask prod
-  "Builds an uberjar to be run with java -jar"
+(deftask build
+  "Run the production system"
   []
   (comp
    (aot)
