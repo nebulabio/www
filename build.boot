@@ -25,8 +25,6 @@
                   [me.bsima/trello    "0.2.0"]
                   [prachetasp/stripe-clojure "1.0.0"]
                   [stripe-tester-clj       "0.1.0"]
-                  [ragtime                 "0.5.2"]
-                  [mbuczko/boot-ragtime    "0.1.5" :scope "test"]
                   [postgresql         "9.3-1102.jdbc41"]
                   [oj                 "0.3.0"]
                   [liberator          "0.13"]
@@ -39,18 +37,16 @@
  '[adzerk.bootlaces          :refer [bootlaces!]]
  '[adzerk.boot-test          :refer [test]]
  '[reloaded.repl :as repl    :refer [start stop go reset]]
- '[mbuczko.boot-ragtime      :refer [ragtime]]
  '[environ.boot              :refer [environ]]
+ '[environ.core              :refer [env]]
  '[system.boot               :refer [system run]]
  '[bio.nebula.server.systems :refer [dev-system prod-system]])
 
 (def +version+ "latest")
 (bootlaces! +version+)
 
-(task-options! ragtime {:database (str "jdbc:" (:database-uri (load-file ".env.edn")))
-                        :directory "db/migrations"}
-               ;garden  {:styles-var 'bio.nebula.styles/base :output-to "public/css/style.css"}
-               ;cljs    {:source-map true :asset-path "/js/out"}
+(task-options! ;;garden  {:styles-var 'bio.nebula.styles/base :output-to "public/css/style.css"}
+               ;;cljs    {:source-map true :asset-path "/js/out"}
                pom     {:project 'bio.nebula
                         :version +version+}
                aot     {:namespace '#{bio.nebula.server}}
@@ -61,7 +57,7 @@
 (deftask dev
   "Run nebula.bio for local development."
   []
-  (comp (environ :env (load-file ".env.edn"))
+  (comp (if (.exists (clojure.java.io/as-file ".env.edn")) (environ :env (load-file ".env.edn")))
         (watch :verbose true)
         (speak :theme "pillsbury")
         (system :sys #'dev-system :hot-reload true :auto-start true
