@@ -1,21 +1,19 @@
-%form.card{:action => "/checkout/", :method => "POST"}
-  %input{:type => "hidden", :value => "trelloIdString"}
+%form.item{action: "/checkout/", method: "POST", data: {id: "card-model"}}
+  %input{type: "hidden", value: "trelloIdString", data: {id: "card-model-trello-id"}}
   %div.image
-    %img{:src => "//placehold.it/200x200"}
+    %img{src: "//placehold.it/200x200", data: {id: "card-model-image"}}
   %div.content
-    %h3.header.card-title{"data-id" => "card-model-title"}
+    %h3.header.card-title{data: {id:  "card-model-title"}}
       = lorem.sentence
     %div.meta
-      Owner: 
-      %span.owner.card-owner{"data-id" => "card-model-owner"}
+      %span.owner.card-owner{data: {id: "card-model-owner"}}
         = lorem.name
-    %div.description.card-labels
-      %div.ui.red.label{"data-id" => "card-model-labels"}
+      %div.ui.red.label{data: {id: "card-model-label"}}
         = lorem.word
-  %div.content
-    %h4.ui.sub.header Description
-    %div.card-description{"data-id" => "card-model-content"}
+    %div.description.card-description{data: {id: "card-model-content"}}
       %p= lorem.sentences 6
-  %button.ui.bottom.attached.green.button.fund-me{:type => "submit"}
-    %i.shop.icon
-    Fund Me
+    %div.extra
+      %a.ui.right.floated.basic.button{href: "#", target: "_blank", data: {id: "card-model-trello-link"}}
+        View on Trello
+      %button.ui.right.floated.green.button.fund-me{type: "submit", data: {id: "card-model-submit"}}
+        Fund Me

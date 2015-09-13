@@ -23,8 +23,8 @@
 <div class='twelve wide column'>
 <div class='ui message'>
 <i class='close icon'></i>
-<div class='header'>Cum ea eligendi voluptatum impedit est exercitationem quo aut totam iste magni</div>
-<div class='content'>Totam nihil ipsum et aliquam reprehenderit adipisci corrupti mollitia placeat et eum. repellendus ea fuga voluptatem autem consectetur hic veniam autem cum. ad vel eos nulla temporibus molestiae repellendus mollitia laboriosam. sint natus officia aliquam soluta consectetur consequatur aut vel eos</div>
+<div class='header'>Laborum consequatur dignissimos aut qui et</div>
+<div class='content'>Blanditiis autem quod autem qui perspiciatis fuga nulla debitis consequatur dolorem perspiciatis quia. consequatur amet quod ipsam odio aliquid soluta in amet quidem sint dignissimos. reiciendis vel error ut adipisci reiciendis enim dolorem voluptatem omnis cumque officia veritatis. praesentium dolores incidunt eum mollitia. quia dolorum repellendus quis sit laboriosam cupiditate occaecati dolorem laboriosam recusandae quia animi</div>
 </div>
 
 <div class='field'>
@@ -1100,37 +1100,35 @@ Checkout with Stripe
 </div>
 <div class='four wide column'>
 <div class='ui cards'>
-<form action='/checkout/' class='card' method='POST'>
-<input type='hidden' value='trelloIdString'>
+<form action='/checkout/' class='item' data-id='card-model' method='POST'>
+<input data-id='card-model-trello-id' type='hidden' value='trelloIdString'>
 <div class='image'>
-<img src='//placehold.it/200x200'>
+<img data-id='card-model-image' src='//placehold.it/200x200'>
 </div>
 <div class='content'>
 <h3 class='header card-title' data-id='card-model-title'>
-Quas occaecati delectus ipsa placeat repellat sit adipisci rerum ut qui eos quidem id quas
+Ratione modi voluptas soluta quod non dolores est suscipit libero mollitia voluptates non enim in
 </h3>
 <div class='meta'>
-Owner:
 <span class='owner card-owner' data-id='card-model-owner'>
-Courtney Teague
+Kyra Puckett
 </span>
-</div>
-<div class='description card-labels'>
-<div class='ui red label' data-id='card-model-labels'>
-sint
+<div class='ui red label' data-id='card-model-label'>
+consequatur
 </div>
 </div>
+<div class='description card-description' data-id='card-model-content'>
+<p>Provident qui asperiores ex. Nisi ut minima dolorem reprehenderit fugit facilis eveniet eaque quo ullam. Aliquam voluptate quidem rerum omnis quasi harum sunt consequuntur ea assumenda. Qui non pariatur cupiditate praesentium debitis id aliquam dolorem vitae expedita laudantium autem possimus. Saepe cupiditate sint tempore. Voluptatem laborum est id aut</p>
 </div>
-<div class='content'>
-<h4 class='ui sub header'>Description</h4>
-<div class='card-description' data-id='card-model-content'>
-<p>Cum at ut cumque doloremque excepturi exercitationem placeat. Cum sapiente eos officiis accusamus sit. Voluptate itaque illum accusamus est corporis. Hic qui quis perspiciatis soluta modi. Placeat quo maxime nam adipisci maiores voluptatem quis eos corporis est libero voluptatum enim quisquam. Molestiae et et alias ea quibusdam quia provident quia reiciendis fugiat tenetur neque iure id</p>
-</div>
-</div>
-<button class='ui bottom attached green button fund-me' type='submit'>
-<i class='shop icon'></i>
+<div class='extra'>
+<a class='ui right floated basic button' data-id='card-model-trello-link' href='#' target='_blank'>
+View on Trello
+</a>
+<button class='ui right floated green button fund-me' data-id='card-model-submit' type='submit'>
 Fund Me
 </button>
+</div>
+</div>
 </form>
 
 </div>

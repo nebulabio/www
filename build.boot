@@ -10,6 +10,7 @@
                   [boot-environ            "1.0.1" :scope "test"]
 
                   ;; Server
+                  [org.clojure/core.match "0.3.0-alpha4"]
                   [org.danielsz/system     "0.1.9"]
                   [http-kit           "2.1.19"]
                   [markdown-clj       "0.9.74"]
@@ -66,7 +67,7 @@
         (system :sys #'dev-system :hot-reload true :auto-start true
                 :files ["handler.clj" "views.clj" "db.clj" "trello.clj" "stripe.clj"])
         (repl :server true)
-        (speak :theme "pillsbury")))
+        (speak :theme "ordinance")))
 
 (deftask prod
   "Builds an uberjar to be run with java -jar"

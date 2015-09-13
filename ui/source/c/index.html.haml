@@ -7,6 +7,7 @@ page_classes: app
 
 %h2 Tasks that currently need funding
 
-%div.ui.cards
-  - 4.times do
-    = partial "card"
+%div.ui.segment
+  %div.ui.divided.items{data: {id: "card-listing"}}
+    - 4.times do
+      = partial "card"
