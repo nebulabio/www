@@ -29,7 +29,7 @@
                   [postgresql         "9.3-1102.jdbc41"]
                   [oj                 "0.3.0"]
                   [liberator          "0.13"]
-                  [cheshire           "5.5.0"]
+                  [cheshire           "5.5.0"]]
  :source-paths   #{"src" "test" "db"}
  :resource-paths #{"resources" "ui/templates"}
  :target-path    "target")
