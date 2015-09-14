@@ -59,19 +59,25 @@
   []
   (comp (if (.exists (clojure.java.io/as-file ".env.edn")) (environ :env (load-file ".env.edn")))
         (watch :verbose true)
-        (speak :theme "pillsbury")
         (system :sys #'dev-system :hot-reload true :auto-start true
                 :files ["handler.clj" "views.clj" "db.clj" "card.clj" "stripe.clj"])
         (repl :server true)
         (speak :theme "ordinance")))
 
-(deftask build
+(deftask prod
   "Run the production system"
   []
   (comp
-   (aot)
+   (if (.exists (clojure.java.io/as-file ".env.edn")) (environ :env (load-file ".env.edn")))
+   (system :sys #'prod-system :auto-start true)))
+
+(deftask build
+  "Build uberjar for deployment"
+  []
+  (comp
    (pom)
    (uber)
+   (aot)
    (jar)))
 
 (defn -main [& args]
