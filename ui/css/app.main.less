@@ -1,0 +1,27 @@
+body { // globals
+  background-color: #eee;
+  .container {
+    background-color: #eee;
+    margin-top: 7em;
+  }
+}
+
+
+#app { // app viewport
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  postion: relative;
+
+  line-height: 2em;
+  font-size: 1.2em;
+
+  a {
+    border-bottom: 2px solid hsl(215, 50%, 70%);
+
+    &:hover { border-color: hsl(45, 98%, 77%) }
+    &.btn { border: none }
+  }
+}

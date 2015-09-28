@@ -20,10 +20,10 @@
    [castra.core :refer [defrpc]]
    [clojure.core.match :refer [match]]))
 
-(def +board-id+              "Tb4b74V5")
-(def +needs-funding-list-id+ "555cffd190be73cf47d22591")
-(def auth                    {:key (:trello-key env) :token (:trello-token env)})
-(def trello-client           (make-client (:trello-key env) (:trello-token env)))
+(def ^:private +board-id+              "Tb4b74V5")
+(def ^:private +needs-funding-list-id+ "555cffd190be73cf47d22591")
+(def ^:private auth                    {:key (:trello-key env) :token (:trello-token env)})
+(def ^:private trello-client           (make-client (:trello-key env) (:trello-token env)))
 
 (defn needs-funding-cards []
   (trello-client t/get (str "lists/" +needs-funding-list-id+ "/cards")))
@@ -48,11 +48,15 @@
      :id     (:id card)
      :desc   (:desc card)}))
 
-(defrpc get-card [id]
+(defn get-card [id]
   (pull-details (trello-client t/get (str "cards/" id))))
 
-(defrpc get-all-cards []
-  (map pull-details (needs-funding-cards)))
+(def initial-state {:needs-funding-cards (mapv pull-details (needs-funding-cards))})
+
+(def state (atom initial-state))
+
+(defrpc get-state []
+  @state)
 
 (comment
   "Old stuff"
