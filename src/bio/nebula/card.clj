@@ -1,4 +1,4 @@
-(ns bio.nebula.server.card
+(ns bio.nebula.card
   "Cards are independent work items, stored in Trello. This namespace
   defines two RESTful resources that integrate and filter the Trello
   API for the kind of data that we want.
@@ -15,11 +15,10 @@
    [schema.core :as s :refer [defschema]]
    [clojure.tools.logging :as log]
    [cheshire.core :as json :refer :all]
-   [liberator.core :as liber :refer [defresource resource]]
    [trello.client :as t]
    [trello.core :refer [make-client]]
-   [clojure.core.match :refer [match]]
-   [bio.nebula.server.views :refer [card-view]]))
+   [castra.core :refer [defrpc]]
+   [clojure.core.match :refer [match]]))
 
 (def +board-id+              "Tb4b74V5")
 (def +needs-funding-list-id+ "555cffd190be73cf47d22591")
@@ -49,22 +48,30 @@
      :id     (:id card)
      :desc   (:desc card)}))
 
-(defresource card [id]
-  :available-media-types ["application/json" "text/html"]
-  :allowed-methods [:get]
-  :handle-ok
-  #(let [media-type (get-in % [:representation :media-type])
-         this (pull-details (trello-client t/get (str "cards/" id)))]
-     (match media-type
-            ["application/json"] this
-            ["text/html"] (card-view this))))
+(defrpc get-card [id]
+  (pull-details (trello-client t/get (str "cards/" id))))
 
-(defresource cards
-  :available-media-types ["application/json" "text/html"]
-  :allowed-method [:get]
-  :handle-ok (fn [req]
-               (let [this (map pull-details (needs-funding-cards))
-                     media-type (get-in req [:representation :media-type])]
-                 (match [media-type]
-                        ["application/json"] this
-                        ["text/html"] (apply str (card-view this))))))
+(defrpc get-all-cards []
+  (map pull-details (needs-funding-cards)))
+
+(comment
+  "Old stuff"
+  (defresource card [id]
+    :available-media-types ["application/json" "text/html"]
+    :allowed-methods [:get]
+    :handle-ok
+    #(let [media-type (get-in % [:representation :media-type])
+           this (pull-details (trello-client t/get (str "cards/" id)))]
+       (match media-type
+              ["application/json"] this
+              ["text/html"] (card-view this))))
+
+  (defresource cards
+    :available-media-types ["application/json" "text/html"]
+    :allowed-method [:get]
+    :handle-ok (fn [req]
+                 (let [this (map pull-details (needs-funding-cards))
+                       media-type (get-in req [:representation :media-type])]
+                   (match [media-type]
+                          ["application/json"] this
+                          ["text/html"] (apply str (card-view this)))))))
