@@ -8,10 +8,11 @@
    [hoplon.core :as h]))
 
 ;; card component state
-(defc state         {})
-(defc error         nil)
+(defc  state         {})
+(defc  error         nil)
 (defc= error-message (when error (.-message error)))
-(defc loading       ["loading"])
+(defc  loading       [])
+(defc= loading?      (seq loading))
 
 (defc= needs-funding-cards (:needs-funding-cards state))
 
@@ -56,6 +57,8 @@
 
 (def cards-view
   (h/div :class "ui segment"
+         (h/div :id "loading" :fade-toggle loading? :css {:display "none"} :class "ui message info"
+              "loading...")
          (h/div :id "cards" :class "ui divided items"
                 (loop-tpl :bindings [card needs-funding-cards]
                           (card-model :card card)))))

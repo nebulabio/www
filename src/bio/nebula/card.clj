@@ -12,6 +12,7 @@
   without much other modifications to the code."
   (:require
    [environ.core :refer [env]]
+   [com.stuartsierra.component :as component]
    [schema.core :as s :refer [defschema]]
    [clojure.tools.logging :as log]
    [cheshire.core :as json :refer :all]
@@ -21,12 +22,11 @@
    [clojure.core.match :refer [match]]))
 
 (def ^:private +board-id+              "Tb4b74V5")
-(def ^:private +needs-funding-list-id+ "555cffd190be73cf47d22591")
 (def ^:private auth                    {:key (:trello-key env) :token (:trello-token env)})
 (def ^:private trello-client           (make-client (:trello-key env) (:trello-token env)))
 
-(defn needs-funding-cards []
-  (trello-client t/get (str "lists/" +needs-funding-list-id+ "/cards")))
+(defn needs-funding-cards [list-id]
+  (trello-client t/get (str "lists/" list-id "/cards")))
 
 (defn- pull-member-details [member]
   {:name (:fullName member)
@@ -51,31 +51,21 @@
 (defn get-card [id]
   (pull-details (trello-client t/get (str "cards/" id))))
 
-(def initial-state {:needs-funding-cards (mapv pull-details (needs-funding-cards))})
+(defn initial-state [list-id]
+  {:needs-funding-cards (mapv pull-details (needs-funding-cards list-id))})
 
-(def state (atom initial-state))
+(defn get-state* [component]
+  (let [state-atom (:state component)]
+    @state-atom))
 
-(defrpc get-state []
-  @state)
+(defrecord Card [list-id state]
+  component/Lifecycle
+  (start [this]
+    (log/info "Starting the Card service with list-id" list-id)
+    (defrpc get-state [] (get-state* this)))
+  (stop [this]
+    (log/info "Stopping the Card service")
+    (assoc this :state nil)))
 
-(comment
-  "Old stuff"
-  (defresource card [id]
-    :available-media-types ["application/json" "text/html"]
-    :allowed-methods [:get]
-    :handle-ok
-    #(let [media-type (get-in % [:representation :media-type])
-           this (pull-details (trello-client t/get (str "cards/" id)))]
-       (match media-type
-              ["application/json"] this
-              ["text/html"] (card-view this))))
-
-  (defresource cards
-    :available-media-types ["application/json" "text/html"]
-    :allowed-method [:get]
-    :handle-ok (fn [req]
-                 (let [this (map pull-details (needs-funding-cards))
-                       media-type (get-in req [:representation :media-type])]
-                   (match [media-type]
-                          ["application/json"] this
-                          ["text/html"] (apply str (card-view this)))))))
+(defn new-card-service [list-id]
+  (Card. list-id (atom (initial-state list-id))))
