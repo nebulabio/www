@@ -71,8 +71,7 @@
    (if (.exists (clojure.java.io/as-file ".env.edn")) (environ :env (load-file ".env.edn")))
    (watch :verbose true)
    (speak :theme "ordinance")
-   (system :sys #'dev-system :hot-reload true :auto-start true
-           :files ["handler.clj" "views.clj" "card.clj" "stripe.clj"])
+   (system :sys #'dev-system)
    (repl :server true)
    (less)
    (hoplon)

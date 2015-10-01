@@ -54,18 +54,24 @@
 (defn initial-state [list-id]
   {:needs-funding-cards (mapv pull-details (needs-funding-cards list-id))})
 
-(defn get-state* [component]
-  (let [state-atom (:state component)]
+(defn get-state* [component-ref]
+  "Takes a reference to the Card component and returns the contents of
+  the state."
+  (let [state-atom (:state @component-ref)]
     @state-atom))
 
 (defrecord Card [list-id state]
   component/Lifecycle
   (start [this]
-    (log/info "Starting the Card service with list-id" list-id)
-    (defrpc get-state [] (get-state* this)))
+    (let [s (atom (initial-state list-id))
+          this (ref this)]
+      (log/info "Starting the Card service with list-id" list-id)
+      (dosync
+       (alter this assoc :state s)
+       (defrpc get-state [] (get-state* this)))))
   (stop [this]
     (log/info "Stopping the Card service")
     (assoc this :state nil)))
 
 (defn new-card-service [list-id]
-  (Card. list-id (atom (initial-state list-id))))
+  (map->Card {:list-id list-id}))
