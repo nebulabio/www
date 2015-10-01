@@ -3,6 +3,7 @@
   (:require-macros [javelin.core :refer [defc defc= cell= cell-let]]
                    [hoplon.core :refer [loop-tpl defelem]])
   (:require
+   [markdown.core :refer [md->html]]
    [javelin.core :as j :refer [cell]]
    [castra.core :as c :refer [mkremote]]
    [hoplon.core :as h]))
@@ -22,6 +23,15 @@
 (defn init []
   (get-state)
   (js/setInterval (get-state) 200))
+
+
+;; library fns
+;; also see: https://github.com/tailrecursion/hoplon.io/blob/master/src/util.clj#L30-L37
+(defn str->dom [^String s]
+  "Takes a string and returns a DOM node fit for snuggling right along
+  side other Hlisp code."
+  (seq (.parseHTML js/jQuery s)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;; views ;;;;;;;;;;;;;;;;;;;;;;;;;;
 (def index
@@ -48,7 +58,7 @@
                         (h/span :class "owner card-owner" (cell= (:name owner)))
                         (loop-tpl :bindings [l labels]
                                   (label :label l)))
-                 (h/div :class "description" (h/text desc))
+                 (h/div {:class "description"} (str->dom (md->html @desc)))
                  (h/div :class "extra"
                         (h/a :class "ui right floated basic button" :href url :target "_blank"
                              "View on Trello")
