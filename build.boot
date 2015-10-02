@@ -34,7 +34,8 @@
                   [org.clojure/clojurescript "1.7.122"]
                   [hoplon/hoplon "6.0.0-alpha10"]
                   [hoplon/boot-hoplon "0.1.10"]
-                  [deraen/boot-less "0.4.2"]]
+                  [deraen/boot-less "0.4.2"]
+                  [secretary "1.2.3"]]
  :source-paths   #{"src" "test" "db" "ui"}
  :resource-paths #{"resources"}
  :asset-paths    #{}

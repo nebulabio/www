@@ -1,5 +1,6 @@
 (page "index.html"
-      (:require [bio.nebula.client :as client]))
+      (:require [bio.nebula.client :as client]
+                [secretary.core :as secretary]))
 
 (client/init)
 
@@ -15,16 +16,10 @@
   (noscript
    (div :id "noscript"
         (p "JavaScript is required to view this page.")))
-  (div {:class "ui blue inverted fixed main stackable menu"}
-       (a {:class "item" :href "/"}
-          (img {:src "/images/symbol-white.png"}))
-       (a {:class "item" :href "/"} "Projects")
-       (div {:class "right menu"}
-            (a {:class "item" :href "https://github.com/nebulabio/protochip"} "GitHub")
-            (a {:class "item" :href "https://wiki.github.com/nebulabio/protochip"} "Wiki")
-            (a {:class "item" :href "https://trello.com/b/Tb4b74V5/protochip"} "Trello")
-            (a {:class "item" :href "https://nebulabio.tumblr.com"} "Tumblr")))
+  (client/nav)
   (div {:id "app" :class "ui container"}
        (client/index)
        (h2 (text "Projects that currently need funding"))
        (client/cards-view))))
+
+(secretary/dispatch! "/")

@@ -1,12 +1,13 @@
 (ns bio.nebula.client
   "State handler for all of the client-side stuff."
   (:require-macros [javelin.core :refer [defc defc= cell= cell-let]]
-                   [hoplon.core :refer [loop-tpl defelem]])
+                   [hoplon.core :refer [loop-tpl defelem with-page-load]])
   (:require
    [markdown.core :refer [md->html]]
    [javelin.core :as j :refer [cell]]
    [castra.core :as c :refer [mkremote]]
-   [hoplon.core :as h]))
+   [hoplon.core :as h]
+   [secretary.core :as secretary :refer-macros [defroute]]))
 
 ;; card component state
 (defc  state         {})
@@ -33,8 +34,32 @@
   (seq (.parseHTML js/jQuery s)))
 
 
+(defroute projects-path "/projects" []
+  (js/console.log  (str "hiya, projects!")))
+
+(secretary/set-config! :prefix "#")
+(secretary/dispatch! "/projects/")
+
+(def route (h/route-cell "#/index"))
+(defn page-for [& routes]
+  (h/div :toggle (cell= (set routes) route)) :style "display: none")
+
+(with-page-load (.. js/window -location reload))
+
 ;;;;;;;;;;;;;;;;;;;;;;;; views ;;;;;;;;;;;;;;;;;;;;;;;;;;
-(def index
+
+(defn nav []
+  (h/div {:class "ui blue inverted fixed main stackable menu"}
+       (h/a {:class "item" :href "#"}
+          (h/img {:src "/images/symbol-white.png"}))
+       (h/a {:class "item" :id "projects-link" :click #(projects-path)} "Projects")
+       (h/div {:class "right menu"}
+            (h/a {:class "item" :href "https://github.com/nebulabio/protochip"} "GitHub")
+            (h/a {:class "item" :href "https://wiki.github.com/nebulabio/protochip"} "Wiki")
+            (h/a {:class "item" :href "https://trello.com/b/Tb4b74V5/protochip"} "Trello")
+            (h/a {:class "item" :href "https://nebulabio.tumblr.com"} "Tumblr"))))
+
+(defn index []
   (h/div {:id "index"}
          (h/p (h/b "We are creating a suite of open source medical devices, designed with the " (h/i "user") " in mind first."))
          (h/p "We believe that medicine should be used to improve the human condition, and to a large extent modern medicine excels at this. However, medical technology has been falling behind computer technology. Medicine is plagued by excessive regulations, opaque art, outlandishly-high costs, and other barriers to entry.")
@@ -65,7 +90,8 @@
                         (h/button :class "ui right floated green button fund-me"
                                   "Fund Me"))))))
 
-(def cards-view
+(defn cards-view []
+  (h/h2 (h/text "Projects that currently need funding"))
   (h/div :class "ui segment"
          (h/div :id "loading" :fade-toggle loading? :css {:display "none"} :class "ui message info"
               "loading...")
