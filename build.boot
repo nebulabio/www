@@ -22,6 +22,7 @@
                   [ring/ring-defaults "0.1.5"]
                   [ring/ring-mock     "0.3.0"]
                   [compojure          "1.4.0"]
+                  [org.immutant/scheduling "2.1.0"]
                   [hoplon/castra      "3.0.0-SNAPSHOT"]
                   [prismatic/schema   "1.0.1"]
                   [me.bsima/trello    "0.2.1"]
