@@ -8,10 +8,11 @@
             [environ.core :refer [env]]
             [bio.nebula.handler :refer [app]]))
 
-(defn dev-system []
-  (component/system-map :web (new-web-server (Integer. (env :http-port)) app)
-                        :protochip-funding (new-card-service "555cffd190be73cf47d22591")))
+(defsystem dev-system
+  [:web (new-web-server (Integer. (env :http-port)) app)
+   :cards (new-card-service "555cffd190be73cf47d22591" {:in [10 :seconds],
+                                                        :every [1 :minute]})])
 
 (defsystem prod-system
   [:web (new-web-server (Integer. (env :http-port)) app)
-   :protochip-funding (new-card-service "555cffd190be73cf47d22591")])
+   :cards (new-card-service "555cffd190be73cf47d22591")])

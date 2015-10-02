@@ -1,21 +1,23 @@
 (ns bio.nebula.card
   "Cards are independent work items, stored in Trello. This namespace
-  defines two RESTful resources that integrate and filter the Trello
-  API for the kind of data that we want.
+  defines a service that retrieves the list of cards according to the
+  configured schedule (set in bio.nebula.systems). Two RPC endpoints
+  are established:
 
-      card  - a resource that takes one id parameter and returns the
-              card with the irrelevant data stripped out.
-      cards - takes no arguments and returns a list of cards.
+      get-card  - takes a single parameter of a card id and returns the
+                  card data as a map
+      get-cards - no parameters. returns a vector of all the cards.
 
-  Each resource is first filtered by pull-funding-details, a simple
-  function that can be updated when needed to extend the resources,
-  without much other modifications to the code."
+  Each resource is first filtered by pull-details, a simple function
+  that can be updated when needed to extend the resources, without
+  much other modifications to the code."
   (:require
    [environ.core :refer [env]]
    [com.stuartsierra.component :as component]
    [schema.core :as s :refer [defschema]]
    [clojure.tools.logging :as log]
-   [cheshire.core :as json :refer :all]
+   [cheshire.core :as json]
+   [immutant.scheduling :as sch]
    [trello.client :as t]
    [trello.core :refer [make-client]]
    [castra.core :refer [defrpc]]
@@ -51,27 +53,30 @@
 (defn get-card [id]
   (pull-details (trello-client t/get (str "cards/" id))))
 
-(defn initial-state [list-id]
-  {:needs-funding-cards (mapv pull-details (needs-funding-cards list-id))})
+(defn retrieve-state [list-id]
+  (mapv pull-details (needs-funding-cards list-id)))
 
-(defn get-state* [component-ref]
+(defn update-cards [state-atom list-id]
+  (log/info "-- Updating state for list" list-id)
+  (swap! state-atom assoc :needs-funding-cards (retrieve-state list-id)))
+
+(defrpc get-state []
   "Takes a reference to the Card component and returns the contents of
   the state."
-  (let [state-atom (:state @component-ref)]
+  (let [state-atom (get-in reloaded.repl/system [:cards :state])]
     @state-atom))
 
-(defrecord Card [list-id state]
+(defrecord Card [list-id schedule]
   component/Lifecycle
-  (start [this]
-    (let [s (atom (initial-state list-id))
-          this (ref this)]
-      (log/info "Starting the Card service with list-id" list-id)
-      (dosync
-       (alter this assoc :state s)
-       (defrpc get-state [] (get-state* this)))))
-  (stop [this]
+  (start [component]
+    (let [state    (atom {:needs-funding-cards "Starting up..."})
+          job      #(update-cards state list-id)]
+      (log/info "Starting the Card service with list-id" list-id "with schedule" schedule)
+      (sch/schedule job schedule)
+      (assoc component :state state)))
+  (stop [component]
     (log/info "Stopping the Card service")
-    (assoc this :state nil)))
+    (assoc component :state nil)))
 
-(defn new-card-service [list-id]
-  (map->Card {:list-id list-id}))
+(defn new-card-service [list-id schedule]
+  (Card. list-id schedule))
