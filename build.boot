@@ -35,7 +35,8 @@
                   [hoplon/hoplon "6.0.0-alpha10"]
                   [hoplon/boot-hoplon "0.1.10"]
                   [deraen/boot-less "0.4.2"]
-                  [secretary "1.2.3"]]
+                  [bidi "1.20.3"]
+                  [kibu/pushy "0.3.4"]]
  :source-paths   #{"src" "test" "db" "ui"}
  :resource-paths #{"resources"}
  :asset-paths    #{}
@@ -69,10 +70,10 @@
 (deftask dev
   "Run nebula.bio for local development."
   []
-  (comp 
+  (comp
    (if (.exists (clojure.java.io/as-file ".env.edn")) (environ :env (load-file ".env.edn")))
    (watch :verbose true)
-   (speak :theme "ordinance")
+   ;;(speak :theme "ordinance")
    (system :sys #'dev-system)
    (repl :server true)
    (less)

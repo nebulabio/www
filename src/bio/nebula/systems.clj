@@ -10,7 +10,7 @@
 
 (defsystem dev-system
   [:web (new-web-server (Integer. (env :http-port)) app)
-   :cards (new-card-service "555cffd190be73cf47d22591" {:in [10 :seconds],
+   :cards (new-card-service "555cffd190be73cf47d22591" {:in [0 :seconds],
                                                         :every [1 :minute]})])
 
 (defsystem prod-system

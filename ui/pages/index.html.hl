@@ -1,6 +1,6 @@
 (page "index.html"
       (:require [bio.nebula.client :as client]
-                [secretary.core :as secretary]))
+                [bio.nebula.views :as views]))
 
 (client/init)
 
@@ -16,10 +16,6 @@
   (noscript
    (div :id "noscript"
         (p "JavaScript is required to view this page.")))
-  (client/nav)
+  (views/nav)
   (div {:id "app" :class "ui container"}
-       (client/index)
-       (h2 (text "Projects that currently need funding"))
-       (client/cards-view))))
-
-(secretary/dispatch! "/")
+       @client/view-cell)))

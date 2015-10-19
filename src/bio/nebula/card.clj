@@ -60,9 +60,10 @@
   (log/info "-- Updating state for list" list-id)
   (swap! state-atom assoc :needs-funding-cards (retrieve-state list-id)))
 
-(defrpc get-state []
-  "Takes a reference to the Card component and returns the contents of
-  the state."
+;; Takes a reference to the Card component and returns the contents of
+;; the state.
+(defrpc get-state
+  []
   (let [state-atom (get-in reloaded.repl/system [:cards :state])]
     @state-atom))
 
